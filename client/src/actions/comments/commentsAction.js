@@ -1,4 +1,4 @@
-import { FETCH_COMMENTS, NEW_COMMENT } from '../types'
+import { FETCH_COMMENTS, NEW_COMMENT, DELETE_COMMENT } from '../types'
 
 export const fetchComments = () => dispatch => {
     
@@ -35,4 +35,11 @@ export const newComment = (newComment) => dispatch => {
         type: NEW_COMMENT,
         payload: comment
     }))
+}
+
+export const deleteComment = (id) => {
+    return {
+        type: DELETE_COMMENT,
+        payload: id
+    }
 }

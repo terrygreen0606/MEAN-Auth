@@ -4,10 +4,9 @@ import PropTypes from 'prop-types'
 import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
-import { fetchPosts } from '../../../actions/posts/postsAction'
+import { fetchPosts, deletePost } from '../../../actions/posts/postsAction'
 
 import Comments from '../../comments/readComments/comments'
-
 
 
 export class Posts extends Component {
@@ -16,27 +15,28 @@ export class Posts extends Component {
         this.props.fetchPosts()   
     }
 
+    onDeleteClick = (id) => {
+        this.props.deletePost(id)
+    }
+
     render() {
         const posts = this.props.posts.map( post => (
-            <Fragment key={post.id}>
-                <h2>Posts</h2>
-                <CSSTransition timeout={500} classNames="fade">
-                    <ListGroupItem className="btn-pos-inlist">
-                        <h5>Title : {post.title}</h5>
-                        <p>Content : {post.body}</p>
-                        <Button color="danger" size="sm" className="remove-btn">&times; Delete this Post</Button>
-                    </ListGroupItem>
-                </CSSTransition>
-                <Comments postId={post.id}/>
-                <hr />
-            </Fragment>
-            
+            <CSSTransition key={post.id} timeout={500} classNames="fade">
+                <ListGroupItem>
+                    <h3>Posts</h3>
+                    <h5>Title : {post.title}</h5>
+                    <p>Content : {post.body}</p>
+                    <Button color="danger" size="sm" onClick={this.onDeleteClick.bind(this, post.id)}>&times; Delete this Post</Button>
+                    <hr />
+                    <Comments postId={post.id}/>
+                </ListGroupItem>
+            </CSSTransition>            
         ))
-
+        
         return (
             <Container>
                 <ListGroup>
-                    <TransitionGroup className="posts-list">
+                    <TransitionGroup>
                         {posts}
                     </TransitionGroup>
                 </ListGroup>
@@ -56,4 +56,4 @@ Posts.propTypes = {
     posts: PropTypes.array.isRequired,
 }
 
-export default connect( mapStateToProps, {fetchPosts} )(Posts)
+export default connect( mapStateToProps, {fetchPosts, deletePost} )(Posts)

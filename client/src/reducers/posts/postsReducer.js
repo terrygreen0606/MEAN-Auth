@@ -1,4 +1,4 @@
-import { FETCH_POSTS, NEW_POST } from '../../actions/types'
+import { FETCH_POSTS, NEW_POST, DELETE_POST } from '../../actions/types'
 
 const initialState = {
     postItems: []
@@ -17,6 +17,12 @@ export default function ( state = initialState, action) {
             return {
                 ...state,
                 postItems: [action.payload, ...state.postItems]                 // Put the new post in front of the postItems array
+            }
+
+        case DELETE_POST:
+            return {
+                ...state,
+                postItems: state.postItems.filter( postItem => postItem.id !== action.payload )
             }
 
         default:
