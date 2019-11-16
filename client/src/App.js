@@ -2,8 +2,10 @@ import React from 'react';
 import { Provider } from 'react-redux'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-import './App.css';
 import store from './store'
+
+import './App.css';
+import {Container} from 'reactstrap'
 
 import Posts from './components/posts/readPosts/posts'
 import NewPost from './components/posts/createPosts/newPost'
@@ -14,8 +16,10 @@ function App() {
     <Provider store={store}>
       <div className="App">
         <NavBar />
-        <NewPost />
-        <Posts />
+        <Container>
+          <NewPost />
+          <Posts />
+        </Container>
       </div>
     </Provider>
   );

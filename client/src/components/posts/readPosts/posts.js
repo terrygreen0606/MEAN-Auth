@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap'
+import { ListGroup, ListGroupItem, Button } from 'reactstrap'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 import { fetchPosts, deletePost } from '../../../actions/posts/postsAction'
@@ -28,19 +28,17 @@ export class Posts extends Component {
                     <p>Content : {post.body}</p>
                     <Button color="danger" size="sm" onClick={this.onDeleteClick.bind(this, post.id)}>&times; Delete this Post</Button>
                     <hr />
-                    <Comments postId={post.id}/>
+                    <Comments postId={post.id} />
                 </ListGroupItem>
             </CSSTransition>            
         ))
-        
+
         return (
-            <Container>
-                <ListGroup>
-                    <TransitionGroup>
-                        {posts}
-                    </TransitionGroup>
-                </ListGroup>
-            </Container>
+            <ListGroup>
+                <TransitionGroup>
+                    {posts}
+                </TransitionGroup>
+            </ListGroup>
         )
     }
 }

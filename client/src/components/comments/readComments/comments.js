@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap'
+import { ListGroup, ListGroupItem, Button } from 'reactstrap'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 import './comments.css'
@@ -23,17 +23,19 @@ export class Comments extends Component {
     render() {
 
         const comments = this.props.comments.map(comment => {
-            if (this.props.postId == comment.postId) {
+            if (this.props.postId === comment.postId) {
                 return (
                     <CSSTransition key={comment.id} timeout={500} classNames="fade">
-                        <ListGroupItem className="btn-pos-inlist">
+                        <ListGroupItem>
                             <h4>Title : {comment.name}</h4>
                             <h5>Email : {comment.email}</h5>
                             <p>Content : {comment.body}</p>
-                            <Button color="danger" size="sm" className="remove-btn" onClick={this.deleteOnClick.bind(this, comment.id)}>&times; Delete</Button>
+                            <Button color="warning" size="sm" onClick={this.deleteOnClick.bind(this, comment.id)}>&times; Delete</Button>
                         </ListGroupItem>
                     </CSSTransition>
                 )
+            } else {
+                return null
             }
         })
 
