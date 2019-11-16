@@ -1,20 +1,22 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 import { newComment } from '../../../actions/comments/commentsAction'
 
 export class NewComment extends Component {
 
-    constructor(props) {
-        super(props)
+    // constructor(props) {
+    //     super(props)
 
-        this.state = {
-            title: '',
-            email: '',
-            content: '',
-        }
-    }
+    //     this.state = {
+    //         title: '',
+    //         email: '',
+    //         content: '',
+    //     }
+    // }
 
     onChange = (e) => {
         this.setState({
@@ -43,9 +45,8 @@ export class NewComment extends Component {
 
     render() {
         return (
-            <div>
-                <h3>Add your comment</h3>
-                <form onSubmit={this.onSubmit}>
+            <Container>
+                {/* <form onSubmit={this.onSubmit}>
                     <label>Title</label><br />
                     <input type="text" name="title" value={this.state.title} onChange={this.onChange} /><br />
                     <label>Email</label><br />
@@ -53,8 +54,9 @@ export class NewComment extends Component {
                     <label>Content</label><br />
                     <textarea type="text" name="content" value={this.state.content} onChange={this.onChange} /><br />
                     <button type="submit">Submit</button>
-                </form>
-            </div>
+                </form> */}
+                <Button color="info" size="sm" className="mb-3">+ Comment to this post</Button>
+            </Container>
         )
     }
 }

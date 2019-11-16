@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap'
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 import './comments.css'
 
@@ -18,12 +20,14 @@ export class Comments extends Component {
         
         if (this.props.postId === postId) {
             return (
-                <Fragment>
-                    <h4>Title : {name}</h4>
-                    <h5>Email : {email}</h5>
-                    <span>Content : {body}</span>
-                    <hr />
-                </Fragment>
+                <CSSTransition>
+                    <ListGroupItem className="btn-pos-inlist">
+                        <h4>Title : {name}</h4>
+                        <h5>Email : {email}</h5>
+                        <p>Content : {body}</p>
+                        <Button color="danger" size="sm" className="remove-btn">&times; Delete</Button>
+                    </ListGroupItem>
+                </CSSTransition>
             )
         }
     }
@@ -36,11 +40,15 @@ export class Comments extends Component {
         ))
 
         return (
-            <div className="position">
-                <NewComment postId={this.props.postId}/>
-                <h3>Comments</h3>
-                {comments}
-            </div>
+            <Container className="position">
+                <ListGroup>
+                    <TransitionGroup>
+                        <h4 className="mt-3">Comments</h4>
+                        <NewComment postId={this.props.postId}/>
+                        {comments}
+                    </TransitionGroup>
+                </ListGroup>
+            </Container>
         )
     }
 }
