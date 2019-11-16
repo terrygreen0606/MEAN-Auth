@@ -21,14 +21,14 @@ export class Posts extends Component {
 
     render() {
         const posts = this.props.posts.map( post => (
-            <CSSTransition key={post.id} timeout={500} classNames="fade">
+            <CSSTransition key={post._id} timeout={500} classNames="fade">
                 <ListGroupItem>
                     <h3>Posts</h3>
                     <h5>Title : {post.title}</h5>
                     <p>Content : {post.body}</p>
-                    <Button color="danger" size="sm" onClick={this.onDeleteClick.bind(this, post.id)}>&times; Delete this Post</Button>
+                    <Button color="danger" size="sm" onClick={this.onDeleteClick.bind(this, post._id)}>&times; Delete this Post</Button>
                     <hr />
-                    <Comments postId={post.id} />
+                    <Comments postId={post._id} />
                 </ListGroupItem>
             </CSSTransition>            
         ))

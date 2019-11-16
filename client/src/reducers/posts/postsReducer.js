@@ -1,7 +1,8 @@
-import { FETCH_POSTS, NEW_POST, DELETE_POST } from '../../actions/types'
+import { FETCH_POSTS, NEW_POST, DELETE_POST, POSTS_LOADING } from '../../actions/types'
 
 const initialState = {
-    postItems: []
+    postItems: [],
+    loading: false
 }
 
 export default function ( state = initialState, action) {
@@ -10,7 +11,8 @@ export default function ( state = initialState, action) {
         case FETCH_POSTS:
             return {
                 ...state,
-                postItems: action.payload
+                postItems: action.payload,
+                loading: false
             }
 
         case NEW_POST:
@@ -19,10 +21,16 @@ export default function ( state = initialState, action) {
                 postItems: [action.payload, ...state.postItems]                 // Put the new post in front of the postItems array
             }
 
+        case POSTS_LOADING:
+            return {
+                ...state,
+                loading: true
+            }
+
         case DELETE_POST:
             return {
                 ...state,
-                postItems: state.postItems.filter( postItem => postItem.id !== action.payload )
+                postItems: state.postItems.filter( postItem => postItem._id !== action.payload )
             }
 
         default:

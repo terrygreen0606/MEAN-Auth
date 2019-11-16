@@ -1,7 +1,7 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import { ListGroup, ListGroupItem, Button } from 'reactstrap'
+import { Container, ListGroup, ListGroupItem, Button } from 'reactstrap'
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 import './comments.css'
@@ -25,12 +25,12 @@ export class Comments extends Component {
         const comments = this.props.comments.map(comment => {
             if (this.props.postId === comment.postId) {
                 return (
-                    <CSSTransition key={comment.id} timeout={500} classNames="fade">
+                    <CSSTransition key={comment._id} timeout={500} classNames="fade">
                         <ListGroupItem>
                             <h4>Title : {comment.name}</h4>
                             <h5>Email : {comment.email}</h5>
                             <p>Content : {comment.body}</p>
-                            <Button color="warning" size="sm" onClick={this.deleteOnClick.bind(this, comment.id)}>&times; Delete</Button>
+                            <Button color="warning" size="sm" onClick={this.deleteOnClick.bind(this, comment._id)}>&times; Delete</Button>
                         </ListGroupItem>
                     </CSSTransition>
                 )
@@ -40,7 +40,7 @@ export class Comments extends Component {
         })
 
         return (
-            <Fragment>
+            <Container className="comment-pos">
                 <h4 className="mt-3">Comments</h4>
                 <NewComment postId={this.props.postId}/>
                 <ListGroup>
@@ -48,7 +48,7 @@ export class Comments extends Component {
                         {comments}
                     </TransitionGroup>
                 </ListGroup>
-            </Fragment>
+            </Container>
         )
     }
 }

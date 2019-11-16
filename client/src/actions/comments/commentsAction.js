@@ -1,45 +1,41 @@
-import { FETCH_COMMENTS, NEW_COMMENT, DELETE_COMMENT } from '../types'
+import axios from 'axios'
+import { FETCH_COMMENTS, NEW_COMMENT, DELETE_COMMENT, COMMENTS_LOADING } from '../types'
+
 
 export const fetchComments = () => dispatch => {
-    
-    const reducedComments = []
-    fetch('https://jsonplaceholder.typicode.com/comments')
-        .then( res => res.json())
-        // .then( comments => dispatch({
-        //     type: FETCH_COMMENTS,
-        //     payload: comments
-        // }))
-        .then( comments => {
-            comments.forEach(comment => {               
-                if ( comment.postId <= 3 ) {
-                    reducedComments.push(comment)
-                }
-            })
-            dispatch ({
-                type: FETCH_COMMENTS,
-                payload: reducedComments
-            })
-        })
+
+    dispatch(setCommentsLoading())
+
+    axios
+        .get('/api/comments')
+        .then( res => dispatch({
+            type: FETCH_COMMENTS,
+            payload: res.data
+        }))
 }
 
 export const newComment = (newComment) => dispatch => {
-    fetch('https://jsonplaceholder.typicode.com/comments', {
-        method: 'POST',
-        headers: {
-            'content-type' : 'application/json'
-        },
-        body: JSON.stringify(newComment)
-    })
-    .then( res => res.json())
-    .then( comment => dispatch({
-        type: NEW_COMMENT,
-        payload: comment
-    }))
+    
+    axios
+        .post('/api/comments', newComment)
+        .then( res => dispatch({
+            type: NEW_COMMENT,
+            payload: res.data
+        }))
 }
 
-export const deleteComment = (id) => {
+export const deleteComment = (id) => dispatch => {
+    
+    axios
+        .delete(`/api/comments/${id}`)
+        .then( res => dispatch({
+            type: DELETE_COMMENT,
+            payload: id
+        }))
+}
+
+export const setCommentsLoading = () => {
     return {
-        type: DELETE_COMMENT,
-        payload: id
+        type: COMMENTS_LOADING,
     }
 }

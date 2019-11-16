@@ -7,15 +7,6 @@ import { newComment } from '../../../actions/comments/commentsAction'
 
 export class NewComment extends Component {
 
-    // constructor(props) {
-    //     super(props)
-
-    //     this.state = {
-    //         title: '',
-    //         email: '',
-    //         content: '',
-    //     }
-    // }
     state = {
         title: '',
         email: '',

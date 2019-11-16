@@ -1,47 +1,41 @@
-import { FETCH_POSTS, NEW_POST, DELETE_POST } from '../types'
+import axios from 'axios'
+import { FETCH_POSTS, NEW_POST, DELETE_POST, POSTS_LOADING } from '../types'
 
-// POSTS
 
 export const fetchPosts = () => dispatch => {
-    const reducedPosts = []
-    fetch('https://jsonplaceholder.typicode.com/posts')
-        .then( res => res.json())
-        // .then( posts => dispatch({
-        //     type: FETCH_POSTS,
-        //     payload: posts
-        // }))
-        .then( posts => {
-            posts.forEach(post => {
-                if ( reducedPosts.length < 3 ) {
-                    reducedPosts.push(post)
-                }
-            })
-            dispatch ({
-                type: FETCH_POSTS,
-                payload: reducedPosts
-            })
-        })
+
+    dispatch(setPostsLoading())
+
+    axios
+        .get('/api/posts')
+        .then( res => dispatch({
+            type: FETCH_POSTS,
+            payload: res.data
+        }) )
 }
 
 export const newPost = (postData) => dispatch => {
 
-    fetch('https://jsonplaceholder.typicode.com/posts',{
-        method: 'POST',
-        headers: {
-            'content-type' : 'application/json'
-        },
-        body: JSON.stringify(postData)
-    })
-    .then( res => res.json())
-    .then( post => dispatch({
-        type: NEW_POST,
-        payload: post
-    }))
+    axios
+        .post('/api/posts', postData)
+        .then( res => dispatch({
+            type: NEW_POST,
+            payload: res.data
+        }))
 }
 
-export const deletePost = id => {
+export const deletePost = id => dispatch => {
+    
+    axios
+        .delete(`/api/posts/${id}`)
+        .then( res =>dispatch({
+            type: DELETE_POST,
+            payload: id
+        }))
+}
+
+export const setPostsLoading = () => {
     return {
-        type: DELETE_POST,
-        payload: id
+        type: POSTS_LOADING
     }
 }
