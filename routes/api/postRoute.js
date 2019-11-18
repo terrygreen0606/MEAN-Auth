@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const auth = require('../../middleware/authMiddle')
 
 // Import Post Model
 const Post = require('../../models/postModel')
@@ -16,8 +17,8 @@ router.get('/', (req, res) => {
 
 // POST         /api/posts       This url comes from server.js Use Routes so it's of no need to insert this url again in the router.get('')
 // Create       a post
-// @access      Public
-router.post('/', (req, res) => {
+// @access      Private
+router.post('/', auth, (req, res) => {
 
     const newPost = new Post({
         title: req.body.title,
@@ -29,8 +30,8 @@ router.post('/', (req, res) => {
 
 // DELETE       /api/posts/:id       This url comes from server.js Use Routes so it's of no need to insert this url again in the router.get('')
 // Delete       a post
-// @access      Public
-router.delete('/:id', (req, res) => {
+// @access      Private
+router.delete('/:id', auth, (req, res) => {
 
     Post.findById(req.params.id)                                                    //Get Parameter in the url
         .then( post => post.remove().then( () => res.json({ success: true }) ))

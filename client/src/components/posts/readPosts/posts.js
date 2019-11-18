@@ -26,7 +26,9 @@ export class Posts extends Component {
                     <h3>Posts</h3>
                     <h5>Title : {post.title}</h5>
                     <p>Content : {post.body}</p>
-                    <Button color="danger" size="sm" onClick={this.onDeleteClick.bind(this, post._id)}>&times; Delete this Post</Button>
+                    { this.props.isAuthenticated
+                    ? <Button color="danger" size="sm" onClick={this.onDeleteClick.bind(this, post._id)}>&times; Delete this Post</Button>
+                    : null }
                     <hr />
                     <Comments postId={post._id} />
                 </ListGroupItem>
@@ -46,12 +48,14 @@ export class Posts extends Component {
 const mapStateToProps = state => ({
 
     posts: state.posts.postItems,
+    isAuthenticated: state.auth.isAuthenticated
 })
 
 Posts.propTypes = {
 
     fetchPosts: PropTypes.func.isRequired,
     posts: PropTypes.array.isRequired,
+    isAuthenticated: PropTypes.bool
 }
 
 export default connect( mapStateToProps, {fetchPosts, deletePost} )(Posts)

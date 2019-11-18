@@ -30,7 +30,9 @@ export class Comments extends Component {
                             <h4>Title : {comment.name}</h4>
                             <h5>Email : {comment.email}</h5>
                             <p>Content : {comment.body}</p>
-                            <Button color="warning" size="sm" onClick={this.deleteOnClick.bind(this, comment._id)}>&times; Delete</Button>
+                            { this.props.isAuthenticated 
+                            ? <Button color="warning" size="sm" onClick={this.deleteOnClick.bind(this, comment._id)}>&times; Delete</Button>
+                            : null }
                         </ListGroupItem>
                     </CSSTransition>
                 )
@@ -42,7 +44,9 @@ export class Comments extends Component {
         return (
             <Container className="comment-pos">
                 <h4 className="mt-3">Comments</h4>
-                <NewComment postId={this.props.postId}/>
+                { this.props.isAuthenticated 
+                ? <NewComment postId={this.props.postId}/> 
+                : null }
                 <ListGroup>
                     <TransitionGroup>
                         {comments}
@@ -56,10 +60,12 @@ export class Comments extends Component {
 Comments.propTypes = {
     fetchComments: PropTypes.func.isRequired,
     comments: PropTypes.array.isRequired,
+    isAuthenticated: PropTypes.bool
 }
 
 const mapStateToProps = state => ({
     comments: state.comments.comments,
+    isAuthenticated: state.auth.isAuthenticated
 })
 
 export default connect(mapStateToProps, {fetchComments, deleteComment})(Comments)

@@ -1,16 +1,18 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const config = require('config')
 // For DEPLOYMENT
 const path = require('path')
 
 const app = express()
 
 // Bodyparser middleware
-app.use(bodyParser.json())
+app.use(bodyParser.json())                          // Latest version of express doesn't need to import body-parser, instead app.use(express.json())
 
 // DB config
-const db = require('./config/keys').mongoURI
+// const db = require('./config/keys').mongoURI
+const db = config.get('mongoURI')
 
 //Connect to MongoDB
 mongoose.connect(db , {
@@ -21,13 +23,13 @@ mongoose.connect(db , {
     .then( () => console.log("MongoDB connected") )
     .catch( err => console.log(err) )
 
-// Import Routes
-const posts = require('./routes/api/postRoute')
-const comments = require('./routes/api/commentRoute')
 
-// Use Routes
-app.use('/api/posts', posts)
-app.use('/api/comments', comments)
+// Import Routes and Use them
+app.use('/api/posts', require('./routes/api/postRoute'))
+app.use('/api/comments', require('./routes/api/commentRoute'))
+app.use('/api/users', require('./routes/api/userRoute'))
+app.use('/api/auth', require('./routes/api/userAuth'))
+
 
 // Serve Static assets if in production for DEPLOYMENT
 if (process.env.NODE_ENV === "production") {

@@ -47,7 +47,10 @@ export class NewPost extends Component {
 
         return (
             <div>
-                <Button color="success" size="sm" className="mb-3" onClick={this.toggle}>+ Add your Post</Button>
+                { this.props.isAuthenticated 
+                    ? <Button color="success" size="sm" className="mb-3" onClick={this.toggle}>+ Add your Post</Button> 
+                    : <h4 className="mb-3 ml-4">Please Login to manage posts and comments.</h4> }
+                
                 <Modal isOpen={this.state.modal} toggle={this.toggle}>
                     <ModalHeader toggle={this.toggle}>
                         Create Your Post
@@ -69,8 +72,13 @@ export class NewPost extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
+
 NewPost.propTypes = {
-    newPost: PropTypes.func.isRequired
+    newPost: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool
 }
 
-export default connect(null, {newPost})(NewPost)
+export default connect(mapStateToProps, {newPost})(NewPost)
