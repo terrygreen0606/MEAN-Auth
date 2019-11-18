@@ -1,39 +1,35 @@
-import React, { Component } from 'react'
-import { Provider } from 'react-redux'
+import React, { useEffect } from 'react'
+import {useSelector} from 'react-redux'
 
 import 'bootstrap/dist/css/bootstrap.min.css'
-import store from './store'
 
 import { loadUser } from './actions/auth/authAction'
 
 import './App.css';
 import {Container} from 'reactstrap'
-
+import store from './store'
 import Posts from './components/posts/readPosts/posts'
 import NewPost from './components/posts/createPosts/newPost'
 import NavBar from './components/navbar/navbar'
 
 
+function App() {
 
-export class App extends Component {
+  const isAuthenticated = useSelector( state => state.auth.isAuthenticated)
 
-  componentDidMount() {
+  useEffect( () => {
     store.dispatch(loadUser())
-  }
-  
-  render() {
-    return (
-      <Provider store={store}>
-        <div className="App">
-          <NavBar />
-          <Container>
-            <NewPost />
-            <Posts />
-          </Container>
-        </div>
-      </Provider>
-    )
-  }
+  }, [])
+
+  return (
+    <div className="App">
+      <NavBar />
+      <Container>
+        { isAuthenticated ? <NewPost /> : <h4 className="mb-3 ml-4">Please Login to manage posts and comments.</h4> }
+        <Posts />
+      </Container>
+    </div>
+  )
 }
 
 export default App

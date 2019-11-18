@@ -31,10 +31,6 @@ export class Comments extends Component {
         })
     }
 
-    countCommentsPerPost = (postId, ) => {
-
-    }
-
     render() {
 
         // Get Current Posts
@@ -67,7 +63,7 @@ export class Comments extends Component {
 
         return (
             <Container className="comment-pos">
-
+                
                 { this.props.commentsLoading
 
                 ? <h4>Loading comments...</h4>

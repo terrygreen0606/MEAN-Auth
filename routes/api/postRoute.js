@@ -20,12 +20,23 @@ router.get('/', (req, res) => {
 // @access      Private
 router.post('/', auth, (req, res) => {
 
-    const newPost = new Post({
-        title: req.body.title,
-        body: req.body.body
-    })
+    const { title, body } = req.body
 
-    newPost.save().then( post => res.json(post) )
+    if ( !title || !body ) {
+        return res.status(400).json({ msg: 'Please enter all fields.' })
+    }
+
+    Post.findOne({ title: title})
+        .then( post => {
+
+            if (post) return res.status(400).json({ msg: 'The post with that title already exists.'})
+
+            const newPost = new Post({
+                title, body
+            })
+
+            newPost.save().then( post => res.json(post) )
+        })
 })
 
 // DELETE       /api/posts/:id       This url comes from server.js Use Routes so it's of no need to insert this url again in the router.get('')

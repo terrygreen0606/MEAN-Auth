@@ -19,14 +19,30 @@ router.get('/', (req, res) => {
 // @access      Public
 router.post('/', (req, res) => {
 
-    const newComment = new Comment({
-        name: req.body.name,
-        email: req.body.email,
-        body: req.body.body,
-        postId: req.body.postId
-    })
+    const { name, email, body, postId } = req.body
 
-    newComment.save().then( comment => res.json(comment) )
+    // Validation
+    if ( !name || !email || !body ) {
+        return res.status(400).json({ msg: 'Please enter all fields.' })
+    }
+
+    Comment.find({postId})
+        .then( comment => {
+
+            if ( comment ) {
+                for (let i = 0; i < comment.length ; i++) {
+                    if ( comment[i].email === email ) {
+                        return res.status(400).json({ msg: 'You have already commented on this post.' })
+                    }
+                }
+            }
+
+            const newComment = new Comment({
+                name, email, body, postId
+            })
+        
+            newComment.save().then( comment => res.json(comment) ).catch(err => console.log(err))
+        })
 })
 
 // DELETE       /api/posts/:id       This url comes from server.js Use Routes so it's of no need to insert this url again in the router.get('')

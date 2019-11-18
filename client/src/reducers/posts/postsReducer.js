@@ -2,7 +2,7 @@ import { FETCH_POSTS, NEW_POST, DELETE_POST, POSTS_LOADING } from '../../actions
 
 const initialState = {
     postItems: [],
-    loading: false
+    loading: false,
 }
 
 export default function ( state = initialState, action) {

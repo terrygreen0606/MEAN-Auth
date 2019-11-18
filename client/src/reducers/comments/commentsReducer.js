@@ -19,7 +19,7 @@ export default function ( state = initialState, action) {
         case NEW_COMMENT:
             return {
                 ...state,
-                comments: [action.payload, ...state.comments]
+                comments: [action.payload, ...state.comments],
             }
 
         case COMMENTS_LOADING:

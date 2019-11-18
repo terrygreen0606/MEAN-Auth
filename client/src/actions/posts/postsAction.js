@@ -25,7 +25,7 @@ export const newPost = (postData) => (dispatch, getState) => {
             type: NEW_POST,
             payload: res.data
         }))
-        .catch( err => dispatch(returnErrors( err.response.data, err.response.status )))
+        .catch( err => dispatch(returnErrors( err.response.data, err.response.status, 'ADDPOST_FAIL' )))
 }
 
 export const deletePost = id => (dispatch, getState) => {
@@ -36,7 +36,7 @@ export const deletePost = id => (dispatch, getState) => {
             type: DELETE_POST,
             payload: id
         }))
-        .catch( err => dispatch(returnErrors( err.response.data, err.response.status )))
+        .catch( err => dispatch(returnErrors( err.response.data, err.response.status, 'DELETEPOST_FAIL' )))
 }
 
 export const setPostsLoading = () => {
