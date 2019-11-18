@@ -22,7 +22,8 @@ export class NavBar extends Component {
     }
 
     static propTypes = {
-        auth: PropTypes.object.isRequired
+        auth: PropTypes.object.isRequired,
+        userLoading: PropTypes.bool
     }
 
     toggle = () => {
@@ -64,7 +65,10 @@ export class NavBar extends Component {
                     <Container>
                         <NavbarBrand href="/">Blogs</NavbarBrand>
                         <NavbarToggler onClick={this.toggle} />
-                        <Collapse isOpen={this.state.isOpen} navbar>
+
+                        { this.props.userLoading
+                        ? <h3>User loading...</h3>
+                        : <Collapse isOpen={this.state.isOpen} navbar>
                             <Nav className="ml-auto" navbar>
                                 { isAuthenticated ? authLinks : guestLinks }
                                 <NavItem>
@@ -73,7 +77,8 @@ export class NavBar extends Component {
                                     </NavLink>
                                 </NavItem>
                             </Nav>
-                        </Collapse>
+                        </Collapse> }
+                        
                     </Container>
                 </Navbar>
             </div>
@@ -82,7 +87,8 @@ export class NavBar extends Component {
 }
 
 const mapStateToProps = state => ({
-    auth: state.auth
+    auth: state.auth,
+    userLoading: state.auth.isLoading
 })
 
 export default connect(mapStateToProps, null)(NavBar)
