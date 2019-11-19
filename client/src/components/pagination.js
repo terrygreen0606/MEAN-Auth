@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 
 const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
 
@@ -7,16 +7,28 @@ const Pagination = ({ itemsPerPage, totalItems, paginate }) => {
     for ( let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++ ) {
         pageNumbers.push(i)
     }
+
+    const paginateNum = () => {
+        if (pageNumbers.length === 1) {
+            return null
+        } else {
+            return (
+                <Fragment>
+                    { pageNumbers.map( number => (
+                        <li key={number} className="page-item">
+                            <button className="page-link" onClick={ () => paginate(number) }>
+                                {number}
+                            </button>
+                        </li>
+                    ))}
+                </Fragment>
+            )
+        }
+    }
     return (
         <nav>
             <ul className="pagination">
-                { pageNumbers.map( number => (
-                    <li key={number} className="page-item">
-                        <a href="!#" className="page-link" onClick={ () => paginate(number) }>
-                            {number}
-                        </a>
-                    </li>
-                ))}
+                {paginateNum()}
             </ul>
         </nav>
     )
