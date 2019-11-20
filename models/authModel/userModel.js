@@ -3,6 +3,14 @@ const Schema = mongoose.Schema
 
 // Create Schema
 const UserSchema = new Schema({
+    first_name: {
+        type: String,
+        required: true
+    },
+    last_name: {
+        type: String,
+        required: true
+    },
     username: {
         type: String,
         required: true
@@ -15,6 +23,12 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true
+    },
+    resetPasswordToken: {
+        type: String
+    },
+    resetPasswordExpires: {
+        type: String
     },
     register_date: {
         type: Date,

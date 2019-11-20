@@ -1,34 +1,47 @@
 import React, { useEffect } from 'react'
-import {useSelector} from 'react-redux'
-
-import 'bootstrap/dist/css/bootstrap.min.css'
-
-import { loadUser } from './actions/auth/authAction'
+import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 import './App.css';
-import {Container} from 'reactstrap'
+
 import store from './store'
-import Posts from './components/posts/readPosts/posts'
-import NewPost from './components/posts/createPosts/newPost'
-import NavBar from './components/navbar/navbar'
+import { loadUser } from './actions/auth/authAction'
+
+import Preloader from './components/Preloader/preloader'
+import Header from './components/Header/header'
+import Title from './components/Title/title'
+import Homepage from './components/Homepage/homepage'
+import Blogs from './components/Blogs/blogs'
+import Components from './components/ManageUsers/manage_users'
+import Footer from './components/Footer/footer'
+import Copyright from './components/Copyright/copyright'
 
 
 function App() {
-
-  const isAuthenticated = useSelector( state => state.auth.isAuthenticated)
 
   useEffect( () => {
     store.dispatch(loadUser())
   }, [])
 
   return (
-    <div className="App">
-      <NavBar />
-      <Container>
-        { isAuthenticated ? <NewPost /> : <h4 className="mb-3 ml-4">Please Login to manage posts and comments.</h4> }
-        <Posts />
-      </Container>
-    </div>
+    <Router>
+      <div className="App">
+        <Preloader />
+        <div id="canvas">
+          <div id="box_wrapper">
+            <Header />
+            <Title />
+            <Route path='/' exact component={Homepage} />
+            <Route path='/blogs' exact component={Blogs} />
+            <Route path='/login' exact component={Components.Login} />
+            <Route path='/signup' exact component={Components.Signup} />
+            <Route path='/forgot' exact component={Components.ForgotPassword} />
+            <Route path='/reset/:token' exact component={Components.ResetPassword} />
+            <Footer />
+            <Copyright />
+          </div>
+        </div>
+      </div>
+    </Router>
   )
 }
 

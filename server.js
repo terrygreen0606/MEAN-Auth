@@ -6,6 +6,7 @@ const config = require('config')
 const path = require('path')
 
 const app = express()
+// app.use(express.static(__dirname + '/public'));
 
 // Bodyparser middleware
 app.use(bodyParser.json())                          // Latest version of express doesn't need to import body-parser, instead app.use(express.json())
@@ -27,8 +28,7 @@ mongoose.connect(db , {
 // Import Routes and Use them
 app.use('/api/posts', require('./routes/api/postRoute'))
 app.use('/api/comments', require('./routes/api/commentRoute'))
-app.use('/api/users', require('./routes/api/userRoute'))
-app.use('/api/auth', require('./routes/api/userAuth'))
+app.use('/users', require('./routes/UserRoute/userRoute'))
 
 
 // Serve Static assets if in production for DEPLOYMENT
