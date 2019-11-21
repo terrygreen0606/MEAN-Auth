@@ -1,9 +1,12 @@
 import React, { Component, Fragment } from 'react'
 
+import Title from '../Title/title'
+
 export class Homepage extends Component {
     render() {
         return (
             <Fragment>
+                <Title />
                 <section className="s-pt-40 s-pb-30 s-py-lg-130 timetable ls text-center text-md-left" id="timetables">
                     <div className="container">
                         <div className="divider-25"></div>

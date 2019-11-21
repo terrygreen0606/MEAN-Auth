@@ -1564,7 +1564,6 @@ function windowLoadInit() {
 		$(this).remove();
 	});
 }//eof windowLoadInit
-
 $(document).ready(function() {
 	documentReadyInit();
 	initGoogleMap();

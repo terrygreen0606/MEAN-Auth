@@ -1,36 +1,36 @@
-import { FETCH_POSTS, NEW_POST, DELETE_POST, POSTS_LOADING } from '../../actions/types'
+import { FETCH_BLOGS, NEW_BLOG, DELETE_BLOG, BLOGS_LOADING } from '../../actions/types'
 
 const initialState = {
-    postItems: [],
+    blogItems: [],
     loading: false,
 }
 
 export default function ( state = initialState, action) {
     switch(action.type) {
 
-        case FETCH_POSTS:
+        case FETCH_BLOGS:
             return {
                 ...state,
-                postItems: action.payload,
+                blogItems: action.payload,
                 loading: false
             }
 
-        case NEW_POST:
+        case NEW_BLOG:
             return {
                 ...state,
-                postItems: [action.payload, ...state.postItems]                 // Put the new post in front of the postItems array
+                blogItems: [action.payload, ...state.blogItems]                 // Put the new BLOG in front of the BLOGItems array
             }
 
-        case POSTS_LOADING:
+        case BLOGS_LOADING:
             return {
                 ...state,
                 loading: true
             }
 
-        case DELETE_POST:
+        case DELETE_BLOG:
             return {
                 ...state,
-                postItems: state.postItems.filter( postItem => postItem._id !== action.payload )
+                BLOGItems: state.blogItems.filter( blogItem => blogItem._id !== action.payload )
             }
 
         default:

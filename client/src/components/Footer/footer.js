@@ -12,7 +12,7 @@ export class Footer extends Component {
 								<div className="text-center">
 									<a href="./" className="logo logo-footer">
 										<img src="/images/logo.png" alt="" />
-										<span className="logo-text color-darkgrey">Muka
+										<span className="logo-text color-darkgrey">Blogs
 											<strong className="color-main">.</strong>
 										</span>
 									</a>

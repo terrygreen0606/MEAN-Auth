@@ -7,10 +7,23 @@ import { logout } from '../../actions/auth/authAction'
 
 export class Header extends Component {
 
+	state = {
+		activeTitle: -1,
+		titles: [
+			{ pageTitle: 'Home', url: '/' },
+			{ pageTitle: 'Blogs', url: '/blogs'},
+			{ pageTitle: 'Log In', url: '/login'}
+		]
+	}
+
 	static propTypes = {
 		isAuthenticated: PropTypes.bool,
 		userLoading: PropTypes.bool,
 		logout: PropTypes.func.isRequired
+	}
+
+	listColor(index) {
+		this.setState({activeTitle: index})
 	}
 
     render() {
@@ -22,30 +35,25 @@ export class Header extends Component {
 				<div className="container-fluid">
 					<div className="row align-items-center">
 						<div className="col-xl-2 col-lg-3 col-11">
-							<a href="./" className="logo">
+							<Link to="/" className="logo" onClick={this.listColor.bind(this, 0)}>
 								<img src="/images/logo.png" alt="" />
 								<span className="logo-text color-darkgrey">Blogs
 									<strong className="color-main logo-dot">.</strong>
 								</span>
-							</a>
+							</Link>
 						</div>
 						<div className="col-xl-8 col-lg-5 col-1 text-sm-center">
 							<nav className="top-nav">
 								<ul className="nav sf-menu">
-									<li className="active">
-										<Link to='/'>Home</Link>
-									</li>
-									<li>
-										{isAuthenticated
-										?<Link to='/blogs'>Blogs</Link>
-										:<Link to='/login'>Blogs</Link>}
-									</li>
-									{isAuthenticated 
-									?<li><Link to='/' onClick={this.props.logout}>Log Out</Link></li>
-									:<li>
-										<Link to='/login'>Log In</Link>
-									</li>}
-                                    
+									{ this.state.titles.map( (title, index) =>
+										<li key={index} className={this.state.activeTitle === index ? 'active' : ''} onClick={this.listColor.bind(this, index)}>
+											{title.pageTitle === 'Log In'
+											? isAuthenticated
+												? <Link to='/'>Log Out</Link>
+												: <Link to={title.url}>{title.pageTitle}</Link>
+											:<Link to={title.url}>{title.pageTitle}</Link>}
+										</li>
+									)}
 								</ul>
 							</nav>
 						</div>

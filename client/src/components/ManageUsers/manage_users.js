@@ -8,6 +8,8 @@ import { login } from '../../actions/auth/authAction'
 import { register } from '../../actions/auth/authAction'
 import { clearErrors } from '../../actions/error/errorAction'
 
+import Title from '../Title/title'
+
 class Login extends Component {
 
 	state = {
@@ -66,40 +68,43 @@ class Login extends Component {
 
     render() {
         return (
-            <section className="ls s-pt-75 s-pb-60 s-py-lg-100 shop-account-login">
-				<div className="container">
-					<div className="row">
+			<Fragment>
+				<Title pageTitle='Log In' />
+				<section className="ls s-pt-75 s-pb-60 s-py-lg-100 shop-account-login">
+					<div className="container">
+						<div className="row">
 
-						<div className="d-none d-lg-block divider-60"></div>
+							<div className="d-none d-lg-block divider-60"></div>
 
-						<main className="col-lg-12">
-							<article>
-								<div className="entry-content">
-									<div className="woocommerce">
-										{this.state.msg
-										? <div className="alert alert-danger text-center" role="alert">{this.state.msg}</div> : null}
-										<form className="woocomerce-form woocommerce-form-login login text-center" onSubmit={this.onSubmit}>
-											<p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-												<input type="email" className="woocommerce-Input woocommerce-Input--text input-text text-center" name="email" id="email" value={this.state.email} onChange={this.onChange} placeholder="Email address" required />
-											</p>
-											<p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-												<input className="woocommerce-Input woocommerce-Input--text input-text text-center" type="password" name="password" id="password" value={this.state.password} onChange={this.onChange} placeholder="Password" required />
-											</p>
+							<main className="col-lg-12">
+								<article>
+									<div className="entry-content">
+										<div className="woocommerce">
+											{this.state.msg
+											? <div className="alert alert-danger text-center" role="alert">{this.state.msg}</div> : null}
+											<form className="woocomerce-form woocommerce-form-login login text-center" onSubmit={this.onSubmit}>
+												<p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+													<input type="email" className="woocommerce-Input woocommerce-Input--text input-text text-center" name="email" id="email" value={this.state.email} onChange={this.onChange} placeholder="Email address" required />
+												</p>
+												<p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+													<input className="woocommerce-Input woocommerce-Input--text input-text text-center" type="password" name="password" id="password" value={this.state.password} onChange={this.onChange} placeholder="Password" required />
+												</p>
 
-											<p className="form-row">
-												<input type="submit" className="woocommerce-Button button" name="login" value="Login" />
-											</p>
-											<p className="woocommerce-LostPassword lost_password">
-												<Link to='/forgot'>Lost your password?</Link>
-											</p>
-										</form>
+												<p className="form-row">
+													<input type="submit" className="woocommerce-Button button" name="login" value="Login" />
+												</p>
+												<p className="woocommerce-LostPassword lost_password">
+													<Link to='/forgot'>Lost your password?</Link>
+												</p>
+											</form>
+										</div>
 									</div>
-								</div>
-							</article>
-						</main>
+								</article>
+							</main>
+						</div>
 					</div>
-				</div>
-			</section>
+				</section>
+			</Fragment>
         )
     }
 }
@@ -170,45 +175,48 @@ class Signup extends Component {
 
     render() {
         return (
-            <section className="ls s-pt-75 s-pb-60 s-py-lg-100 shop-account-login">
-				<div className="container">
-					<div className="row">
-						<div className="d-none d-lg-block divider-60"></div>
-						<main className="col-lg-12">
-							<article>
-								<div className="entry-content">
-									<div className="woocommerce">
-										{this.state.msg
-										? <div className="alert alert-danger text-center" role="alert">{this.state.msg}</div> : null}
-										<form className="woocomerce-form woocommerce-form-login login text-center" onSubmit={this.onSubmit}>
-											<p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-												<input type="text" className="woocommerce-Input woocommerce-Input--text input-text text-center" name="first_name" id="first_name" value={this.state.first_name} onChange={this.onChange} placeholder="First Name" required />
-											</p>
-											<p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-												<input type="text" className="woocommerce-Input woocommerce-Input--text input-text text-center" name="last_name" id="last_name" value={this.state.last_name} onChange={this.onChange} placeholder="Last Name" required />
-											</p>
-											<p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-												<input type="text" className="woocommerce-Input woocommerce-Input--text input-text text-center" name="username" id="username" value={this.state.username} onChange={this.onChange} placeholder="Username" required />
-											</p>
-											<p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-												<input type="email" className="woocommerce-Input woocommerce-Input--text input-text text-center" name="email" id="email" value={this.state.email} onChange={this.onChange} placeholder="Email" required />
-											</p>
-											<p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
-												<input className="woocommerce-Input woocommerce-Input--text input-text text-center" type="password" name="password" id="password" value={this.state.password} onChange={this.onChange} placeholder="Password" required />
-											</p>
+			<Fragment>
+				<Title pageTitle='Sign Up' />
+				<section className="ls s-pt-75 s-pb-60 s-py-lg-100 shop-account-login">
+					<div className="container">
+						<div className="row">
+							<div className="d-none d-lg-block divider-60"></div>
+							<main className="col-lg-12">
+								<article>
+									<div className="entry-content">
+										<div className="woocommerce">
+											{this.state.msg
+											? <div className="alert alert-danger text-center" role="alert">{this.state.msg}</div> : null}
+											<form className="woocomerce-form woocommerce-form-login login text-center" onSubmit={this.onSubmit}>
+												<p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+													<input type="text" className="woocommerce-Input woocommerce-Input--text input-text text-center" name="first_name" id="first_name" value={this.state.first_name} onChange={this.onChange} placeholder="First Name" required />
+												</p>
+												<p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+													<input type="text" className="woocommerce-Input woocommerce-Input--text input-text text-center" name="last_name" id="last_name" value={this.state.last_name} onChange={this.onChange} placeholder="Last Name" required />
+												</p>
+												<p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+													<input type="text" className="woocommerce-Input woocommerce-Input--text input-text text-center" name="username" id="username" value={this.state.username} onChange={this.onChange} placeholder="Username" required />
+												</p>
+												<p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+													<input type="email" className="woocommerce-Input woocommerce-Input--text input-text text-center" name="email" id="email" value={this.state.email} onChange={this.onChange} placeholder="Email" required />
+												</p>
+												<p className="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+													<input className="woocommerce-Input woocommerce-Input--text input-text text-center" type="password" name="password" id="password" value={this.state.password} onChange={this.onChange} placeholder="Password" required />
+												</p>
 
-											<p className="form-row">
-												<input type="submit" className="woocommerce-Button button" name="login" value="Sign Up" />
-											</p>
+												<p className="form-row">
+													<input type="submit" className="woocommerce-Button button" name="login" value="Sign Up" />
+												</p>
 
-										</form>
+											</form>
+										</div>
 									</div>
-								</div>
-							</article>
-						</main>
+								</article>
+							</main>
+						</div>
 					</div>
-				</div>
-			</section>
+				</section>
+			</Fragment>
         )
     }
 }
@@ -256,27 +264,30 @@ class ForgotPassword extends Component {
 	}
 	render() {
 		return (
-			<section className="ls s-pt-75 s-pb-60 s-py-lg-100 shop-account-password-reset">
-				<div className="container">
-					<div className="row">
-						<div className="d-none d-lg-block divider-50"></div>
-						<main className="col-lg-12">
-							{ this.state.showResult ? this.state.showResult : null}
-							<form onSubmit={this.sendEmail} className="woocommerce-ResetPassword lost_reset_password text-center">
-								<p>Lost your password? Please enter your email address. You will receive a link to create a new password via email.</p>
-								<p className="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
-									<input className="woocommerce-Input woocommerce-Input--text input-text text-center" type="email" name="email" id="email" onChange={this.onChange} value={this.state.email} placeholder="Email" required />
-								</p>
-								<div className="clear"></div>
-								<p className="woocommerce-form-row form-row">
-									<input type="submit" className="woocommerce-Button button" value="Send link Email" />
-								</p>
-							</form>
-						</main>
-						<div className="d-none d-lg-block divider-40"></div>
+			<Fragment>
+				<Title pageTitle='Did you forget your password?'/>
+				<section className="ls s-pt-75 s-pb-60 s-py-lg-100 shop-account-password-reset">
+					<div className="container">
+						<div className="row">
+							<div className="d-none d-lg-block divider-50"></div>
+							<main className="col-lg-12">
+								{ this.state.showResult ? this.state.showResult : null}
+								<form onSubmit={this.sendEmail} className="woocommerce-ResetPassword lost_reset_password text-center">
+									<p>Lost your password? Please enter your email address. You will receive a link to create a new password via email.</p>
+									<p className="woocommerce-form-row woocommerce-form-row--first form-row form-row-first">
+										<input className="woocommerce-Input woocommerce-Input--text input-text text-center" type="email" name="email" id="email" onChange={this.onChange} value={this.state.email} placeholder="Email" required />
+									</p>
+									<div className="clear"></div>
+									<p className="woocommerce-form-row form-row">
+										<input type="submit" className="woocommerce-Button button" value="Send link Email" />
+									</p>
+								</form>
+							</main>
+							<div className="d-none d-lg-block divider-40"></div>
+						</div>
 					</div>
-				</div>
-			</section>
+				</section>
+			</Fragment>
 		)
 	}
 }
@@ -293,7 +304,7 @@ class ResetPassword extends Component {
 	}
 
 	async componentDidMount() {
-		console.log(this.props.match.params.token)
+		// console.log(this.props.match.params.token)
 
 		await axios
 			.get('/users/reset', {
@@ -386,17 +397,20 @@ class ResetPassword extends Component {
 			)
 		}
 		return (
-			<section className="ls s-pt-75 s-pb-60 s-py-lg-100 shop-account-password-reset">
-				<div className="container">
-					<div className="row">
-						<div className="d-none d-lg-block divider-50"></div>
-						<main className="col-lg-12">
-							{showUpdated}
-						</main>
-						<div className="d-none d-lg-block divider-40"></div>
+			<Fragment>
+				<Title pageTitle='Reset your password here.'/>
+				<section className="ls s-pt-75 s-pb-60 s-py-lg-100 shop-account-password-reset">
+					<div className="container">
+						<div className="row">
+							<div className="d-none d-lg-block divider-50"></div>
+							<main className="col-lg-12">
+								{showUpdated}
+							</main>
+							<div className="d-none d-lg-block divider-40"></div>
+						</div>
 					</div>
-				</div>
-			</section>
+				</section>
+			</Fragment>
 		)
 	}
 }

@@ -26,7 +26,7 @@ mongoose.connect(db , {
 
 
 // Import Routes and Use them
-app.use('/api/posts', require('./routes/api/postRoute'))
+app.use('/api/blogs', require('./routes/api/blogRoute'))
 app.use('/api/comments', require('./routes/api/commentRoute'))
 app.use('/users', require('./routes/UserRoute/userRoute'))
 

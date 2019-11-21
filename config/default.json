@@ -1,5 +1,5 @@
 {
-    "mongoURI": "mongodb+srv://terry:mern_boilerplate@mern-ih475.mongodb.net/blogs?retryWrites=true&w=majority",
+    "mongoURI": "mongodb+srv://terry:mern_boilerplate@mern-ih475.mongodb.net/blogsite?retryWrites=true&w=majority",
     "mongoURIonLocalhost": "mongodb://localhost:27017/my_db_name",
     "jwtSecret": "my_JWT_secret"
 }

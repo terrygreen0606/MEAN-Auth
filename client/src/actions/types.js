@@ -1,11 +1,11 @@
-// Posts Action Types
-export const FETCH_POSTS = 'FETCH_POSTS'
+// BLOGs Action Types
+export const FETCH_BLOGS = 'FETCH_BLOGS'
 
-export const NEW_POST = 'NEW_POST'
+export const NEW_BLOG = 'NEW_BLOG'
 
-export const DELETE_POST = 'DELETE_POST'
+export const DELETE_BLOG = 'DELETE_BLOG'
 
-export const POSTS_LOADING = 'POSTS_LOADING'
+export const BLOGS_LOADING = 'BLOGS_LOADING'
 
 // Comments Action Types
 export const FETCH_COMMENTS = 'FECTH_COMMENTS'

@@ -13,7 +13,8 @@ const UserSchema = new Schema({
     },
     username: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     email: {
         type: String,
@@ -25,10 +26,12 @@ const UserSchema = new Schema({
         required: true
     },
     resetPasswordToken: {
-        type: String
+        type: String,
+        default: null
     },
     resetPasswordExpires: {
-        type: String
+        type: String,
+        default: null
     },
     register_date: {
         type: Date,

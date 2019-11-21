@@ -123,7 +123,7 @@ router.get('/', auth, (req, res) => {
     
     User.findById( req.user.id )
         .select('-password')
-        .then( user => res.json(user) )
+        .then( user => res.json({username: user.username, email: user.email}) )
 })
 
 // POST /users/forgotpassword
