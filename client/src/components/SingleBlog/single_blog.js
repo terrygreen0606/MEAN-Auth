@@ -1,11 +1,174 @@
 import React, { Component, Fragment } from 'react'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
+
+import { fetchBlogs } from '../../actions/blogs/blogAction'
+import { fetchComments, newComment } from '../../actions/comments/commentsAction'
+import { clearErrors } from '../../actions/error/errorAction'
 
 import Title from '../Title/title'
 
 export class SingleBlog extends Component {
+
+	state = {
+		content: '',
+		msg: null,
+		submitted: false
+	}
+
+	componentDidMount() {
+		this.props.fetchBlogs()
+		this.props.fetchComments()
+	}
+
+	componentDidUpdate(prevProps) {
+
+		const { error } = this.props
+		
+        if (error !== prevProps.error) {
+            //Check for adding post error
+            if (error.id === "ADDCOMMENT_FAIL") {
+                this.setState({ msg: error.msg.msg })
+            }
+		}
+
+		// If successfully added, clear Errors
+		if (prevProps.comments.length !== this.props.comments.length) {
+			if (this.state.submitted) {
+				this.props.clearErrors()
+				this.setState({
+					content: '',
+					msg: 'You have successfully commented to this blog.'
+				})
+			}
+		}
+    }
+
+	onChange = (e) => {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+
+    onSubmit = (e) => {
+
+		e.preventDefault()
+		this.setState({submitted: true})
+
+		if (this.props.isAuthenticated) {
+			const newComment = {
+				content: this.state.content,
+				username: this.props.user.username,
+				blogId: this.props.match.params.blogId
+			}
+	
+			this.props.newComment(newComment)
+		} else {
+			this.setState({msg: 'Please log in to comment to the blog.'})
+		}
+	}
+
+	showBlog = () => {
+		
+		const blogs = this.props.blogs
+		return blogs.map( blog => {
+			if (blog._id === this.props.match.params.blogId) {
+				return (
+                    <article key={blog._id} className="vertical-item content-padding bordered post type-event status-publish format-standard has-post-thumbnail">
+						<div className="item-media post-thumbnail">
+							<img src="/images/gallery/04.jpg" alt="" />
+							<div className="text-md-left entry-meta item-meta bg-dark-transpatent meta-event">
+								<Link to='/'>
+									<i className="fa fa-calendar color-main2"></i>
+									<span>March 12, 2018</span>
+								</Link>
+								<Link to='/'>
+									<i className="fa fa-map-marker color-main2"></i>
+									<span>{blog.username}</span>
+								</Link>
+								<Link to='/'>
+									<i className="fa fa-thumbs-o-up color-main2"></i>
+									<span>{blog.likes}</span>
+								</Link>
+								<Link to='/'>
+									<i className="fa fa-thumbs-o-down color-main2"></i>
+									<span>{blog.dislikes}</span>
+								</Link>
+							</div>
+						</div>
+
+						<div className="item-content">
+							<header className="entry-header">
+								<h1 className="entry-title">{blog.title}</h1>
+							</header>
+
+							<div className="entry-content">
+								<p>{blog.content}</p>
+							</div>
+						</div>
+					</article>
+                )
+			}
+		})
+	}
+	
+	showComments = () => {
+		const commentsPerBlog = []
+		this.props.comments.map( comment => {
+			if ( comment.blogId == this.props.match.params.blogId ) {
+				commentsPerBlog.push(comment)
+			}
+		})
+		
+		if ( commentsPerBlog.length === 0) {
+			return (
+				<h4 className="comments-title">
+					There are no comments to this blog.<br /> Please leave the first comment here.
+				</h4>
+			)
+		} else {
+			const comments = commentsPerBlog.map( comment => (
+				<li key={comment._id} className="comment">
+					<article className="comment-body">
+						<footer className="comment-meta">
+							<div className="comment-author vcard">
+								<img alt="" src="/images/team/comment-01.jpg" />
+								<b className="fn">
+									<a href="#" rel="nofollow" className="url">{comment.username}</a>
+								</b>
+							</div>
+	
+							<div className="comment-metadata">
+								<a href="#" className="color-main2">
+									<time dateTime="2018-03-14T07:57:01+00:00">
+										19 jan. 18
+									</time>
+								</a>
+							</div>
+						</footer>
+	
+						<div className="comment-content">
+							<p>{comment.content}</p>
+						</div>
+					</article>
+				</li>
+			))
+
+			return (
+				<Fragment>
+					<h4 className="comments-title">
+						{commentsPerBlog.length} Comment(s) To This Post
+					</h4>
+					<ol className="comment-list">
+						{comments}
+					</ol>
+				</Fragment>
+			)
+		}
+	}
+
     render() {
-		console.log(this.props.match.params.blogId)
         return (
 			<Fragment>
 				<Title pageTitle='See comments to this post.' />
@@ -16,233 +179,9 @@ export class SingleBlog extends Component {
 							<div className="d-none d-lg-block divider-60"></div>
 
 							<main className="offset-lg-1 col-lg-10">
-								<article className="vertical-item content-padding bordered post type-event status-publish format-standard has-post-thumbnail">
-									<div className="item-media post-thumbnail">
-										<img src="/images/gallery/04.jpg" alt="" />
-										<div className="text-md-left entry-meta item-meta bg-dark-transpatent meta-event">
-											<Link to='/'>
-												<i className="fa fa-calendar color-main2"></i>
-												<span>March 12, 2018</span>
-											</Link>
-											<Link to='/'>
-												<i className="fa fa-map-marker color-main2"></i>
-												<span>Consetetur sadipscing elitr</span>
-											</Link>
-											<Link to='/'>
-												<i className="fa fa-thumbs-o-up color-main2"></i>
-												<span>68</span>
-											</Link>
-											<Link to='/'>
-												<i className="fa fa-thumbs-o-down color-main2"></i>
-												<span>10</span>
-											</Link>
-										</div>
-									</div>
-
-
-									<div className="item-content">
-										<header className="entry-header">
-											<h1 className="entry-title">Minima molestiae quas quis excepturi non vel</h1>
-										</header>
-
-										<div className="entry-content">
-											<p className="excerpt">
-												At vero eos accusam justo duo dolores et rebum clita kasd gubergren nosea takimata sanctus est dolor sit amet
-											</p>
-
-											<p>
-												At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor amet consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt.
-											</p>
-
-											<ul className="list-styled">
-												<li>Consetetur sadipscing elitr, sed diam nonumy</li>
-												<li>Eirmod tempor invidunt ut labore</li>
-												<li>Dolore magna aliquyam erat</li>
-												<li>Sed diam voluptua. At vero eos accusam</li>
-											</ul>
-
-											<p>
-												At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctusamet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat.
-											</p>
-
-
-										</div>
-									</div>
-								</article>
-
+								{this.showBlog()}
 								<div id="comments" className="comments-area bordered">
-
-									<h4 className="comments-title">
-										5 Comments In This Topic:
-									</h4>
-									<ol className="comment-list">
-										<li className="comment">
-											<article className="comment-body">
-												<footer className="comment-meta">
-													<div className="comment-author vcard">
-														<img alt="" src="/images/team/comment-01.jpg" />
-														<b className="fn">
-															<a href="#" rel="nofollow" className="url">Etta Francis</a>
-														</b>
-													</div>
-
-													<div className="comment-metadata">
-														<a href="#" className="color-main2">
-															<time dateTime="2018-03-14T07:57:01+00:00">
-																19 jan. 18
-															</time>
-														</a>
-													</div>
-												</footer>
-
-												<div className="comment-content">
-													<p>Etiam pharetra massa auctor, accumsan arcu ut, placerat ipsum. Nunc vitae tincidunt lorem. Fusce condimentum.</p>
-												</div>
-
-												<div className="reply">
-													<a rel="nofollow" className="comment-reply-link" href="#reply" aria-label="Reply to John Doe">
-														<i className="color-darkgrey fa fa-mail-reply" aria-hidden="true"></i>
-														Reply
-													</a>
-												</div>
-											</article>
-											<ol className="children">
-												<li className="comment">
-													<article className="comment-body">
-														<footer className="comment-meta">
-															<div className="comment-author vcard">
-																<img alt="" src="/images/team/comment-02.jpg" />
-																<b className="fn">
-																	<a href="#" rel="nofollow" className="url">Jeremy Rice</a>
-																</b>
-															</div>
-
-															<div className="comment-metadata">
-																<a href="#" className="color-main2">
-																	<time dateTime="2018-03-14T08:01:21+00:00">
-																		20 jan. 18
-																	</time>
-																</a>
-															</div>
-
-														</footer>
-
-														<div className="comment-content">
-															<p>Integer sollicitudin consequat ipsum, vel vehicula sem vestibulum ac. Aliquam scelerisque.</p>
-														</div>
-
-														<div className="reply">
-															<a rel="nofollow" className="comment-reply-link" href="#reply" aria-label="Reply to John Doe">
-																<i className="color-darkgrey fa fa-mail-reply" aria-hidden="true"></i>
-																Reply
-															</a>
-														</div>
-													</article>
-													<ol className="children">
-														<li className="comment">
-															<article className="comment-body">
-																<footer className="comment-meta">
-																	<div className="comment-author vcard">
-																		<img alt="" src="/images/team/comment-03.jpg" />
-																		<b className="fn">
-																			<a href="#" rel="nofollow" className="url">Lloyd Meyer</a>
-																		</b>
-																	</div>
-
-																	<div className="comment-metadata">
-																		<a href="#" className="color-main2">
-																			<time dateTime="2018-03-14T08:02:06+00:00">
-																				21 jan. 18
-																			</time>
-																		</a>
-																	</div>
-																</footer>
-
-																<div className="comment-content">
-																	<p>Curabitur semper turpis lacus, nec convallis risus maximus amet.</p>
-																</div>
-																<div className="reply">
-																	<a rel="nofollow" className="comment-reply-link" href="#reply" aria-label="Reply to John Doe">
-																		<i className="color-darkgrey fa fa-mail-reply" aria-hidden="true"></i>
-																		Reply
-																	</a>
-																</div>
-															</article>
-
-														</li>
-													</ol>
-												</li>
-											</ol>
-										</li>
-
-										<li className="comment">
-											<article className="comment-body">
-												<footer className="comment-meta">
-													<div className="comment-author vcard">
-														<img alt="" src="/images/team/comment-04.jpg" />
-														<b className="fn">
-															<a href="#" rel="nofollow" className="url">Olivia Newton</a>
-														</b>
-													</div>
-
-													<div className="comment-metadata">
-														<a href="#" className="color-main2">
-															<time dateTime="2018-03-14T07:57:01+00:00">
-																23 jan. 18
-															</time>
-														</a>
-													</div>
-
-												</footer>
-
-												<div className="comment-content">
-													<p>Maecenas eu leo sed nulla convallis placerat eu eu tellus. Morbi semper risus erat, semper vestibulum leo sed.</p>
-												</div>
-
-												<div className="reply">
-													<a rel="nofollow" className="comment-reply-link" href="#reply" aria-label="Reply to John Doe">
-														<i className="color-darkgrey fa fa-mail-reply" aria-hidden="true"></i>
-														Reply
-													</a>
-												</div>
-											</article>
-											<ol className="children">
-												<li className="comment">
-													<article className="comment-body">
-														<footer className="comment-meta">
-															<div className="comment-author vcard">
-																<img alt="" src="/images/team/comment-05.jpg" />
-																<b className="fn">
-																	<a href="#" rel="nofollow" className="url">Louisa Graves</a>
-																</b>
-															</div>
-
-															<div className="comment-metadata">
-																<a href="#" className="color-main2">
-																	<time dateTime="2018-03-14T08:01:21+00:00">
-																		30 jan. 18
-																	</time>
-																</a>
-															</div>
-
-														</footer>
-
-														<div className="comment-content">
-															<p>Curabitur mollis eget ex et condimentum. Praesent dictum eros vel viverra posuere. Nulla facilisi.</p>
-														</div>
-
-														<div className="reply">
-															<a rel="nofollow" className="comment-reply-link" href="#reply" aria-label="Reply to John Doe">
-																<i className="color-darkgrey fa fa-mail-reply" aria-hidden="true"></i>
-																Reply
-															</a>
-														</div>
-													</article>
-
-												</li>
-											</ol>
-										</li>
-									</ol>
+									{this.showComments()}
 								</div>
 								<nav className="navigation pagination" role="navigation">
 									<h2 className="screen-reader-text">Comments navigation</h2>
@@ -272,36 +211,20 @@ export class SingleBlog extends Component {
 
 								<div className="comment-form-reply ls bordered" id="reply">
 									<div id="respond" className="comment-respond">
-										<h4 id="reply-title" className="comment-reply-title">Write Feedback Now:</h4>
-										<form action="/" method="post" id="comment-form" className="comment-form" noValidate="">
-											<div className="row c-gutter-20">
-												<div className="col-12 col-lg-4">
-													<p className="comment-form-author">
-														<label htmlFor="author">Full Name</label>
-														<input id="author" name="author" type="text" value="" size="30" maxLength="245" aria-required="true" required="required" placeholder="Full Name" />
-													</p>
-												</div>
-												<div className="col-12 col-lg-4">
-													<p className="comment-form-email">
-														<label htmlFor="email">Email Adress</label>
-														<input id="email" name="email" type="email" value="" size="30" maxLength="100" aria-describedby="email" aria-required="true" required="required" placeholder="Email Adress" />
-													</p>
-												</div>
-												<div className="col-12 col-lg-4">
-													<p className="comment-form-phone">
-														<label htmlFor="phone">Phone Number</label>
-														<input id="phone" name="phone" type="text" value="" size="30" aria-required="true" placeholder="Phone Number" />
-													</p>
-												</div>
-											</div>
+										<h4 id="reply-title" className="comment-reply-title">Please leave your comment here.</h4>
+										<form id="comment-form" className="comment-form" onSubmit={this.onSubmit}>
 											<p className="comment-form-comment">
-												<label htmlFor="comment">Your Comment</label>
-												<textarea id="comment" name="comment" cols="45" rows="8" maxLength="65525" aria-required="true" placeholder="Your Comment..." required="required"></textarea>
+												<label htmlFor="content">Your Comment</label>
+												<textarea id="content" name="content" cols="45" rows="8" value={this.state.content} onChange={this.onChange} maxLength="65525" placeholder="Your Comment..." required="required"></textarea>
 											</p>
 											<p className="form-submit">
-												<input name="submit" type="submit" className="submit" value="Send now" />
+												<input name="submit" type="submit" className="submit" value="Comment to this Blog" />
 											</p>
 										</form>
+										{ this.state.msg ? 	<div className="alert alert-danger text-center" role="alert">
+																{this.state.msg}
+															</div>
+														 :  null}
 									</div>
 								</div>
 							</main>
@@ -315,4 +238,29 @@ export class SingleBlog extends Component {
     }
 }
 
-export default SingleBlog
+const mapStateToProps = state => ({
+
+	blogs: state.blogs.blogItems,
+	comments: state.comments.comments,
+    isAuthenticated: state.auth.isAuthenticated,
+	blogsLoading: state.blogs.loading,
+	user: state.auth.user,
+	error: state.error
+})
+
+SingleBlog.propTypes = {
+
+	fetchBlogs: PropTypes.func.isRequired,
+	fetchComments: PropTypes.func.isRequired,
+	newComment: PropTypes.func.isRequired,
+	clearErrors: PropTypes.func.isRequired,
+	blogs: PropTypes.array.isRequired,
+	comments: PropTypes.array.isRequired,
+    isAuthenticated: PropTypes.bool,
+	blogsLoading: PropTypes.bool,
+	user: PropTypes.object,
+	error: PropTypes.object.isRequired
+}
+
+
+export default connect(mapStateToProps, {fetchBlogs, clearErrors, fetchComments, newComment})(SingleBlog)

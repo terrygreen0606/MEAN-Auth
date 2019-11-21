@@ -3,26 +3,19 @@ const Schema = mongoose.Schema
 
 // Create Schema
 const CommentSchema = new Schema({
-    name: {
-        type: String,
-        required: true
-    },
 
-    email: {
+    content: {
         type: String,
         required: true
     },
-
-    body: {
+    blogId: {
         type: String,
         required: true
     },
-
-    postId: {
+    username: {
         type: String,
         required: true
     },
-    
     date: {
         type: Date,
         default: Date.now

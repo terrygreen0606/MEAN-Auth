@@ -2,21 +2,21 @@ const express = require('express')
 const router = express.Router()
 const auth = require('../../middleware/authMiddle')
 
-// Import Post Model
-const Post = require('../../models/blogModel')
+// Import Blog Model
+const Blog = require('../../models/blogModel')
 
 // GET      /api/blogs       This url comes from server.js Use Routes so it's of no need to insert this url again in the router.get('')
 // Get      all blogs
 // @access  Public
 router.get('/', (req, res) => {
 
-    Post.find()
+    Blog.find()
         .sort({ date: -1 })                             // Descending order
-        .then(posts => res.json(posts))
+        .then(blogs => res.json(blogs))
 })
 
 // POST         /api/blogs       This url comes from server.js Use Routes so it's of no need to insert this url again in the router.get('')
-// Create       a post
+// Create       a blog
 // @access      Private
 
 // router.post('/', auth, (req, res) => {
@@ -28,16 +28,16 @@ router.post('/', (req, res) => {
         return res.status(400).json({ msg: 'Please enter all fields.' })
     }
 
-    Post.findOne({ title: title})
-        .then( post => {
+    Blog.findOne({ title: title})
+        .then( blog => {
 
-            if (post) return res.status(400).json({ msg: 'The post with that title already exists.'})
+            if (blog) return res.status(400).json({ msg: 'The blog with that title already exists.'})
 
-            const newPost = new Post({
+            const newBlog = new Blog({
                 title, content, username
             })
 
-            newPost.save().then( post => res.json(post) )
+            newBlog.save().then( blog => res.json(blog) )
         })
 })
 
@@ -47,8 +47,8 @@ router.post('/', (req, res) => {
 // router.delete('/:id', auth, (req, res) => {
 router.delete('/:id', (req, res) => {
 
-    Post.findById(req.params.id)                                                    //Get Parameter in the url
-        .then( post => post.remove().then( () => res.json({ success: true }) ))
+    Blog.findById(req.params.id)                                                    //Get Parameter in the url
+        .then( blog => blog.remove().then( () => res.json({ success: true }) ))
         .catch( err => res.status(404).json( {success: false} ) )
 })
 

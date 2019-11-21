@@ -19,26 +19,26 @@ router.get('/', (req, res) => {
 // @access      Public
 router.post('/', (req, res) => {
 
-    const { name, email, body, postId } = req.body
+    const {content, username, blogId } = req.body
 
     // Validation
-    if ( !name || !email || !body ) {
+    if ( !content || !username || !blogId ) {
         return res.status(400).json({ msg: 'Please enter all fields.' })
     }
 
-    Comment.find({postId})
+    Comment.find({blogId})
         .then( comment => {
 
             if ( comment ) {
                 for (let i = 0; i < comment.length ; i++) {
-                    if ( comment[i].email === email ) {
+                    if ( comment[i].username === username ) {
                         return res.status(400).json({ msg: 'You have already commented on this post.' })
                     }
                 }
             }
 
             const newComment = new Comment({
-                name, email, body, postId
+                content, username, blogId
             })
         
             newComment.save().then( comment => res.json(comment) ).catch(err => console.log(err))

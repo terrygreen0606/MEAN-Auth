@@ -261,7 +261,7 @@ router.post('/forgotpassword', (req, res, next) => {
 // Get    '/users/reset'
 // Reset Password after comparing tokens
 router.get('/reset', (req, res, next) => {
-    console.log(req.query.token)
+    // console.log(req.query.token)
     User.findOne({
             resetPasswordToken: req.query.token,
             resetPasswordExpires: {
