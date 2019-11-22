@@ -2,12 +2,15 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
 const config = require('config')
+const fileUpload = require('express-fileupload')
 // For DEPLOYMENT
 const path = require('path')
 
 const app = express()
 // app.use(express.static(__dirname + '/public'));
 
+// Fileupload Package
+app.use(fileUpload())
 // Bodyparser middleware
 app.use(bodyParser.json())                          // Latest version of express doesn't need to import body-parser, instead app.use(express.json())
 

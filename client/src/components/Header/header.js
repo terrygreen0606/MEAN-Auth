@@ -49,7 +49,7 @@ export class Header extends Component {
 										<li key={index} className={this.state.activeTitle === index ? 'active' : ''} onClick={this.listColor.bind(this, index)}>
 											{title.pageTitle === 'Log In'
 											? isAuthenticated
-												? <Link to='/'>Log Out</Link>
+												? <Link to='/' onClick={this.props.logout}>Log Out</Link>
 												: <Link to={title.url}>{title.pageTitle}</Link>
 											:<Link to={title.url}>{title.pageTitle}</Link>}
 										</li>

@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import dateFormat from 'dateformat'
 
 import { fetchBlogs, deleteBlog, newBlog } from '../../actions/blogs/blogAction'
 import { clearErrors } from '../../actions/error/errorAction'
@@ -17,32 +18,49 @@ export class Blogs extends Component {
 		msg: null,
 		submitted: false,
 		currentPage: 1,
-        blogsPerPage: 5
+		blogsPerPage: 5,
+		filename: 'Choose Image',
+		uploadedFile: null,
+		uploaded: {}
 	}
 
 	onSubmit = (e) => {
 
 		e.preventDefault()
+		
+		if (this.props.error.msg == 'Invalid token.') {
+			return <Redirect to='/login' />
+		}
+
 		this.setState({submitted: true})
+
 		if (this.props.isAuthenticated) {
-			const newBlog = {
+			const formData = new FormData()
+			formData.append('file', this.state.uploadedFile)
+
+			const arr = []
+			arr.push({
 				title: this.state.title,
 				content: this.state.content,
 				username: this.props.user.username
-			}
+			})
+
+			formData.append('blog', JSON.stringify(arr))
 	
-			this.props.newBlog(newBlog)
+			this.props.newBlog(formData)
 		} else {
 			this.setState({msg: 'Please log in to post your blog.'})
 		}
     }
 
     onChange = (e) => {
-
         this.setState({
             [e.target.name] : e.target.value
         })
+	}
 
+	uploadImage = (e) => {
+		this.setState({ uploadedFile: e.target.files[0], filename: e.target.files[0].name })
 	}
 	
 	paginate = (pageNumber) => {
@@ -77,58 +95,93 @@ export class Blogs extends Component {
 				})
 			}
 		}
-
-    }
-
-    render() {
-
+	}
+	
+	showBlogs = () => {
 		const { currentPage, blogsPerPage } = this.state
 		const indexOfLastBlog = currentPage * blogsPerPage
 		const indexOfFirstBlog = indexOfLastBlog - blogsPerPage
 		const currentBlogs = this.props.blogs.slice( indexOfFirstBlog, indexOfLastBlog )
 
-		const blogs = currentBlogs.map( blog => (
-			<article key={blog._id} className="post side-item content-padding bordered">
-				<div className="row">
-					<div className="col-xl-4 col-lg-5 col-md-5">
-						<div className="item-media post-thumbnail">
-							<img src="/images/events/01.jpg" alt="" />
-							<div className="media-links">
-								<Link className="abs-link" to="/blogs/:blogId"></Link>
+		if (currentBlogs.length === 0) {
+			return (
+				<h3>We currently have no blogs. Please be the first to post your blog on our website.</h3>
+			)
+		} else {
+			const blogs = currentBlogs.map( blog => (
+				<article key={blog._id} className="post side-item content-padding bordered">
+					<div className="row">
+						<div className="col-xl-4 col-lg-5 col-md-5">
+							<div className="item-media post-thumbnail">
+								<img src={blog.image} alt="" />
+								<div className="media-links">
+									<Link className="abs-link" to="/blogs/:blogId"></Link>
+								</div>
+							</div>
+						</div>
+	
+						<div className="col-xl-8 col-lg-7 col-md-6">
+							<div className="item-content">
+								<h6>
+									<Link to={"/blogs/" + blog._id}>
+										{blog.title}
+									</Link>
+								</h6>
+								<div className="item-meta color-darkgrey">
+									<i className="fa fa-calendar color-main"></i>
+										<span>{dateFormat(blog.register_date, 'mmmm dS, yyyy')}</span>
+									<i className="fa fa-map-marker color-main"></i>
+									<span>{blog.username}</span>
+								</div>
+								<p>
+									{blog.content}
+								</p>
+								<div className="item-meta color-darkgrey">
+									<i className="fa fa-thumbs-o-up color-main"></i>
+									<span>{blog.likes}</span>
+									<i className="fa fa-thumbs-o-down color-main"></i>
+									<span>{blog.dislikes}</span>
+								</div>
 							</div>
 						</div>
 					</div>
+					<div className="text-center blog-btn ">
+						<Link to={"/blogs/" + blog._id} className="btn btn-outline-maincolor2">Read more</Link>
+					</div>
+				</article>
+			))
+			
+			return (
+				<Fragment>
+					{blogs}
+					<Pagination itemsPerPage={blogsPerPage} totalItems={this.props.blogs.length} paginate={this.paginate} />
+				</Fragment>
+			)
+		}
+	}
 
-					<div className="col-xl-8 col-lg-7 col-md-6">
-						<div className="item-content">
-							<h6>
-								<Link to={"/blogs/" + blog._id}>
-									{blog.title}
-								</Link>
-							</h6>
-							<div className="item-meta color-darkgrey">
-								<i className="fa fa-calendar color-main"></i>
-								<span>March 11, 2018</span>
-								<i className="fa fa-map-marker color-main"></i>
-								<span>{blog.username}</span>
-							</div>
-							<p>
-								{blog.content}
-							</p>
-							<div className="item-meta color-darkgrey">
-								<i className="fa fa-thumbs-o-up color-main"></i>
-								<span>{blog.likes}</span>
-								<i className="fa fa-thumbs-o-down color-main"></i>
-								<span>{blog.dislikes}</span>
-							</div>
-						</div>
-					</div>
+	recentBlogs = () => {
+		const recentBlogs = this.props.blogs.slice(0, 2)
+		return recentBlogs.map( blog => (
+			<li key={blog._id} className="media">
+				<a className="media-image" href="blog-single-right.html">
+					<img src={blog.image} alt="" />
+				</a>
+				<div className="media-body">
+					<p>
+						<a href="blog-single-right.html">{blog.title}</a>
+					</p>
+					<h6 className="item-meta">
+						<i className="fa fa-calendar color-main"></i>
+						{dateFormat(blog.register_date, 'mmmm dS, yyyy')}
+					</h6>
 				</div>
-				<div className="text-center blog-btn ">
-					<Link to={"/blogs/" + blog._id} className="btn btn-outline-maincolor2">Read more</Link>
-				</div>
-			</article>
+			</li>
 		))
+	}
+
+    render() {
+
         return (
 			<Fragment>
 				<Title pageTitle='One of the best Blog websites' />
@@ -138,8 +191,7 @@ export class Blogs extends Component {
 
 						<div className="row c-gutter-60">
 							<main className="col-lg-7 col-xl-8">
-								{blogs}
-								<Pagination itemsPerPage={blogsPerPage} totalItems={this.props.blogs.length} paginate={this.paginate} />
+								{this.showBlogs()}
 								<div className="comment-form-reply ls bordered" id="reply">
 									<div id="respond" className="comment-respond">
 										<h4 id="reply-title" className="comment-reply-title">Upload your Blog here:</h4>
@@ -152,6 +204,10 @@ export class Blogs extends Component {
 												<label htmlFor="content">Your Blog Content</label>
 												<textarea id="content" name="content" cols="45" rows="8" value={this.state.content} onChange={this.onChange} maxLength="65525" placeholder="Your Blog Content..." required="required"></textarea>
 											</p>
+											<div className="custom-file mb-4">
+												<input type="file" className="custom-file-input" id="customFile" onChange={this.uploadImage} required />
+												<label style={{ display: 'block' }} className="custom-file-label" htmlFor="customFile">{this.state.filename}</label>
+											</div>
 											<p className="form-submit">
 												<input name="submit" type="submit" className="submit" value="Post your blog" />
 											</p>
@@ -232,7 +288,6 @@ export class Blogs extends Component {
 														<strong className="rating">3</strong> out of 5
 													</span>
 												</div>
-
 											</div>
 										</li>
 
@@ -257,56 +312,9 @@ export class Blogs extends Component {
 								</div>
 
 								<div className="widget widget_recent_posts">
-
-									<h3 className="widget-title">Recent Posts</h3>
+									<h3 className="widget-title">Recent Blogs</h3>
 									<ul className="list-unstyled">
-										<li className="media">
-											<a className="media-image" href="blog-single-right.html">
-												<img src="/images/events/01.jpg" alt="" />
-											</a>
-											<div className="media-body">
-												<p>
-													<a href="blog-single-right.html">Pro Cooking Tips Braising Meats For Tenderness</a>
-												</p>
-												<h6 className="item-meta">
-													<i className="fa fa-calendar color-main"></i>
-													20 jan, 18
-												</h6>
-											</div>
-										</li>
-
-										<li className="media">
-											<a className="media-image" href="blog-single-right.html">
-												<img src="/images/events/02.jpg" alt="" />
-											</a>
-											<div className="media-body">
-												<p>
-													<a href="blog-single-right.html">Barbecue Party Tips For A Truly Amazing Event</a>
-												</p>
-												<h6 className="item-meta">
-													<i className="fa fa-calendar color-main"></i>
-													23 jan, 18
-												</h6>
-
-											</div>
-										</li>
-
-										<li className="media">
-											<a className="media-image" href="blog-single-right.html">
-												<img src="/images/events/03.jpg" alt="" />
-											</a>
-											<div className="media-body">
-												<p>
-													<a href="blog-single-right.html">The Best Way To Cook Your Freshly Caught Fish</a>
-												</p>
-												<h6 className="item-meta">
-													<i className="fa fa-calendar color-main"></i>
-													25 jan, 18
-												</h6>
-
-											</div>
-										</li>
-
+										{this.recentBlogs()}
 									</ul>
 								</div>
 								<div className="widget widget_apsc_widget">

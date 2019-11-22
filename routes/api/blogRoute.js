@@ -11,7 +11,7 @@ const Blog = require('../../models/blogModel')
 router.get('/', (req, res) => {
 
     Blog.find()
-        .sort({ date: -1 })                             // Descending order
+        .sort({ register_date: -1 })                             // Descending order
         .then(blogs => res.json(blogs))
 })
 
@@ -19,22 +19,35 @@ router.get('/', (req, res) => {
 // Create       a blog
 // @access      Private
 
-// router.post('/', auth, (req, res) => {
-router.post('/', (req, res) => {
+router.post('/', auth, (req, res) => {
 
-    const { title, content, username } = req.body
+    const blogData = JSON.parse(req.body.blog)
+    const { title, content, username } = blogData[0]
 
+    // Validation
     if ( !title || !content || !username ) {
         return res.status(400).json({ msg: 'Please enter all fields.' })
     }
+    if (req.files === null) {
+        return res.status(400).json({ msg: 'No file uploaded.'})
+    }
 
-    Blog.findOne({ title: title})
+    const file = req.files.file
+    // Move the uploaded file to
+    file.mv(`${__dirname}../../../client/public/uploads/${file.name}`, err => {
+        if (err) {
+            console.log(err)
+            return res.status(500).send(err)
+        }
+    })
+    const filePath = `/uploads/${file.name}`
+    Blog.findOne({ username })
         .then( blog => {
 
-            if (blog) return res.status(400).json({ msg: 'The blog with that title already exists.'})
+            if (blog) return res.status(400).json({ msg: 'You have already posted your blog.'})
 
             const newBlog = new Blog({
-                title, content, username
+                title, content, username, image: filePath
             })
 
             newBlog.save().then( blog => res.json(blog) )
@@ -44,8 +57,7 @@ router.post('/', (req, res) => {
 // DELETE       /api/blogs/:id       This url comes from server.js Use Routes so it's of no need to insert this url again in the router.get('')
 // Delete       a blog
 // @access      Private
-// router.delete('/:id', auth, (req, res) => {
-router.delete('/:id', (req, res) => {
+router.delete('/:id', auth, (req, res) => {
 
     Blog.findById(req.params.id)                                                    //Get Parameter in the url
         .then( blog => blog.remove().then( () => res.json({ success: true }) ))

@@ -1,20 +1,24 @@
 import React, { Component, Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import dateFormat from 'dateformat'
 
 import { fetchBlogs } from '../../actions/blogs/blogAction'
 import { fetchComments, newComment } from '../../actions/comments/commentsAction'
 import { clearErrors } from '../../actions/error/errorAction'
 
 import Title from '../Title/title'
+import Pagination from '../pagination'
 
 export class SingleBlog extends Component {
 
 	state = {
 		content: '',
 		msg: null,
-		submitted: false
+		submitted: false,
+		currentPage: 1,
+		commentsPerPage: 3
 	}
 
 	componentDidMount() {
@@ -43,6 +47,12 @@ export class SingleBlog extends Component {
 				})
 			}
 		}
+	}
+	
+	paginate = (pageNumber) => {
+        this.setState({
+            currentPage: pageNumber
+        })
     }
 
 	onChange = (e) => {
@@ -54,6 +64,11 @@ export class SingleBlog extends Component {
     onSubmit = (e) => {
 
 		e.preventDefault()
+
+		if (this.props.error.msg == 'Invalid token.') {
+			return <Redirect to='/login' />
+		}
+
 		this.setState({submitted: true})
 
 		if (this.props.isAuthenticated) {
@@ -77,11 +92,11 @@ export class SingleBlog extends Component {
 				return (
                     <article key={blog._id} className="vertical-item content-padding bordered post type-event status-publish format-standard has-post-thumbnail">
 						<div className="item-media post-thumbnail">
-							<img src="/images/gallery/04.jpg" alt="" />
+							<img src={blog.image} alt="" />
 							<div className="text-md-left entry-meta item-meta bg-dark-transpatent meta-event">
 								<Link to='/'>
 									<i className="fa fa-calendar color-main2"></i>
-									<span>March 12, 2018</span>
+									<span>{dateFormat(blog.register_date, 'mmmm dS, yyyy')}</span>
 								</Link>
 								<Link to='/'>
 									<i className="fa fa-map-marker color-main2"></i>
@@ -114,12 +129,18 @@ export class SingleBlog extends Component {
 	}
 	
 	showComments = () => {
+		const { currentPage, commentsPerPage } = this.state
+		const indexOfLastComment = currentPage * commentsPerPage
+		const indexOfFirstComment = indexOfLastComment - commentsPerPage
+
 		const commentsPerBlog = []
 		this.props.comments.map( comment => {
-			if ( comment.blogId == this.props.match.params.blogId ) {
+			if ( comment.blogId === this.props.match.params.blogId ) {
 				commentsPerBlog.push(comment)
 			}
 		})
+
+		const currentComments = commentsPerBlog.slice(indexOfFirstComment, indexOfLastComment)
 		
 		if ( commentsPerBlog.length === 0) {
 			return (
@@ -128,7 +149,7 @@ export class SingleBlog extends Component {
 				</h4>
 			)
 		} else {
-			const comments = commentsPerBlog.map( comment => (
+			const comments = currentComments.map( comment => (
 				<li key={comment._id} className="comment">
 					<article className="comment-body">
 						<footer className="comment-meta">
@@ -142,7 +163,7 @@ export class SingleBlog extends Component {
 							<div className="comment-metadata">
 								<a href="#" className="color-main2">
 									<time dateTime="2018-03-14T07:57:01+00:00">
-										19 jan. 18
+										{dateFormat(comment.date, 'mmmm dS, yyyy')}
 									</time>
 								</a>
 							</div>
@@ -157,12 +178,15 @@ export class SingleBlog extends Component {
 
 			return (
 				<Fragment>
-					<h4 className="comments-title">
-						{commentsPerBlog.length} Comment(s) To This Post
-					</h4>
-					<ol className="comment-list">
-						{comments}
-					</ol>
+					<div id="comments" className="comments-area bordered">
+						<h4 className="comments-title">
+							{commentsPerBlog.length} Comment(s) To This Post
+						</h4>
+						<ol className="comment-list">
+							{comments}
+						</ol>
+					</div>
+					<Pagination itemsPerPage={commentsPerPage} totalItems={commentsPerBlog.length} paginate={this.paginate} />
 				</Fragment>
 			)
 		}
@@ -180,35 +204,7 @@ export class SingleBlog extends Component {
 
 							<main className="offset-lg-1 col-lg-10">
 								{this.showBlog()}
-								<div id="comments" className="comments-area bordered">
-									{this.showComments()}
-								</div>
-								<nav className="navigation pagination" role="navigation">
-									<h2 className="screen-reader-text">Comments navigation</h2>
-									<div className="nav-links">
-										<a className="prev page-numbers" href="events-right.html">
-											<i className="fa fa-angle-left"></i>
-											<span className="screen-reader-text">Previous page</span>
-										</a>
-										<a className="page-numbers" href="events-right.html">
-											<span className="meta-nav screen-reader-text">Page </span>
-											1
-										</a>
-										<span className="page-numbers current">
-											<span className="meta-nav screen-reader-text">Page </span>
-											2
-										</span>
-										<a className="page-numbers" href="events-right.html">
-											<span className="meta-nav screen-reader-text">Page </span>
-											3
-										</a>
-										<a className="next page-numbers" href="events-right.html">
-											<span className="screen-reader-text">Next page</span>
-											<i className="fa fa-angle-right"></i>
-										</a>
-									</div>
-								</nav>
-
+								{this.showComments()}
 								<div className="comment-form-reply ls bordered" id="reply">
 									<div id="respond" className="comment-respond">
 										<h4 id="reply-title" className="comment-reply-title">Please leave your comment here.</h4>
