@@ -3,7 +3,10 @@ import { Link, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 import dateFormat from 'dateformat'
+import axios from 'axios'
+import store from '../../store'
 
+import { tokenConfig } from '../../actions/auth/authAction'
 import { fetchBlogs } from '../../actions/blogs/blogAction'
 import { fetchComments, newComment } from '../../actions/comments/commentsAction'
 import { clearErrors } from '../../actions/error/errorAction'
@@ -31,7 +34,7 @@ export class SingleBlog extends Component {
 		const { error } = this.props
 		
         if (error !== prevProps.error) {
-            //Check for adding post error
+            //Check for adding comment error
             if (error.id === "ADDCOMMENT_FAIL") {
                 this.setState({ msg: error.msg.msg })
             }
@@ -62,10 +65,9 @@ export class SingleBlog extends Component {
     }
 
     onSubmit = (e) => {
-
 		e.preventDefault()
 
-		if (this.props.error.msg == 'Invalid token.') {
+		if (this.props.error.msg === 'Invalid token.') {
 			return <Redirect to='/login' />
 		}
 
@@ -84,9 +86,59 @@ export class SingleBlog extends Component {
 		}
 	}
 
+	likeOrDislike = ( flag, likeArr, dislikeArr, blogPoster ) => {
+		if (this.props.isAuthenticated) {
+			const username = this.props.user.username
+			if (flag) {
+				for (let i=0; i<likeArr.length; i++) {
+					if (likeArr[i] === username) {
+						return console.log('you already LIKED this post.')
+					}
+				}
+			} else {
+				for (let i=0; i<dislikeArr.length; i++) {
+					if (dislikeArr[i] === username) {
+						return console.log('you already DISLIKED this post.')
+					}
+				}
+			}
+
+			if (flag) {
+				for (let i=0; i<dislikeArr.length; i++) {
+					if (dislikeArr[i] === username) {
+						dislikeArr.splice(i, 1)
+						break
+					}
+				}
+			} else {
+				for (let i=0; i<likeArr.length; i++) {
+					if (likeArr[i] === username) {
+						likeArr.splice(i, 1)
+						break
+					}
+				}
+			}
+
+			if (flag) {
+				likeArr.push(username)
+			} else {
+				dislikeArr.push(username)
+			}
+
+			const toSend = { likes: likeArr, dislikes: dislikeArr, username: blogPoster }
+			axios
+				.post('/api/blogs/update', toSend, tokenConfig(store.getState))
+				.catch( err => {
+					console.log(err)
+				})
+		} else {
+			console.log('login to like or dislike')
+		}
+	}
+
 	showBlog = () => {
 		
-		const blogs = this.props.blogs
+		const {blogs} = this.props
 		return blogs.map( blog => {
 			if (blog._id === this.props.match.params.blogId) {
 				return (
@@ -102,13 +154,14 @@ export class SingleBlog extends Component {
 									<i className="fa fa-map-marker color-main2"></i>
 									<span>{blog.username}</span>
 								</Link>
-								<Link to='/'>
+								<Link to='#' onClick={this.likeOrDislike.bind( this, true, blog.likes, blog.dislikes, blog.username)}>
 									<i className="fa fa-thumbs-o-up color-main2"></i>
-									<span>{blog.likes}</span>
+									<span>{blog.likes.length}</span>
 								</Link>
-								<Link to='/'>
+								<Link to='#' onClick={this.likeOrDislike.bind( this, false, blog.likes, blog.dislikes, blog.username)}>
+								{/* onClick={this.likeOrDislike( false, blog.likes, blog.dislikes)} */}
 									<i className="fa fa-thumbs-o-down color-main2"></i>
-									<span>{blog.dislikes}</span>
+									<span>{blog.dislikes.length}</span>
 								</Link>
 							</div>
 						</div>

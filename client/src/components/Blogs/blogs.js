@@ -9,6 +9,7 @@ import { clearErrors } from '../../actions/error/errorAction'
 
 import Title from '../Title/title'
 import Pagination from '../pagination'
+import RecentBlogs from './recentBlogs'
 
 export class Blogs extends Component {
 
@@ -28,7 +29,7 @@ export class Blogs extends Component {
 
 		e.preventDefault()
 		
-		if (this.props.error.msg == 'Invalid token.') {
+		if (this.props.error.msg === 'Invalid token.') {
 			return <Redirect to='/login' />
 		}
 
@@ -115,7 +116,7 @@ export class Blogs extends Component {
 							<div className="item-media post-thumbnail">
 								<img src={blog.image} alt="" />
 								<div className="media-links">
-									<Link className="abs-link" to="/blogs/:blogId"></Link>
+									<Link className="abs-link" to={"/blogs/" + blog._id}></Link>
 								</div>
 							</div>
 						</div>
@@ -134,13 +135,15 @@ export class Blogs extends Component {
 									<span>{blog.username}</span>
 								</div>
 								<p>
-									{blog.content}
+									{blog.content.length <= 200
+									? blog.content
+									: blog.content.substr(0, 200) + '...'}
 								</p>
 								<div className="item-meta color-darkgrey">
 									<i className="fa fa-thumbs-o-up color-main"></i>
-									<span>{blog.likes}</span>
+									<span>{blog.likes.length}</span>
 									<i className="fa fa-thumbs-o-down color-main"></i>
-									<span>{blog.dislikes}</span>
+									<span>{blog.dislikes.length}</span>
 								</div>
 							</div>
 						</div>
@@ -158,26 +161,6 @@ export class Blogs extends Component {
 				</Fragment>
 			)
 		}
-	}
-
-	recentBlogs = () => {
-		const recentBlogs = this.props.blogs.slice(0, 2)
-		return recentBlogs.map( blog => (
-			<li key={blog._id} className="media">
-				<a className="media-image" href="blog-single-right.html">
-					<img src={blog.image} alt="" />
-				</a>
-				<div className="media-body">
-					<p>
-						<a href="blog-single-right.html">{blog.title}</a>
-					</p>
-					<h6 className="item-meta">
-						<i className="fa fa-calendar color-main"></i>
-						{dateFormat(blog.register_date, 'mmmm dS, yyyy')}
-					</h6>
-				</div>
-			</li>
-		))
 	}
 
     render() {
@@ -221,6 +204,21 @@ export class Blogs extends Component {
 							</main>
 
 							<aside className="col-lg-5 col-xl-4">
+								<div className="bg-maincolor widget-search">
+									<div className="widget widget_search">
+										<h5>Search Your Favorites</h5>
+										<p>Find more exciting news and offers</p>
+										<form role="search" method="get" className="search-form" action="/">
+											<label htmlFor="search-form-widget">
+												<span className="screen-reader-text">Search for:</span>
+											</label>
+											<input type="search" id="search-form-widget" className="search-field form-control" placeholder="Type Keyword Here..." value="" name="search" />
+											<button type="submit" className="search-submit">
+												<span className="screen-reader-text">Type Keyword Here...</span>
+											</button>
+										</form>
+									</div>
+								</div>
 								<div className="widget widget_popular_entries">
 
 									<h3 className="widget-title">Popular Posts</h3>
@@ -311,12 +309,8 @@ export class Blogs extends Component {
 									</ul>
 								</div>
 
-								<div className="widget widget_recent_posts">
-									<h3 className="widget-title">Recent Blogs</h3>
-									<ul className="list-unstyled">
-										{this.recentBlogs()}
-									</ul>
-								</div>
+								<RecentBlogs />
+
 								<div className="widget widget_apsc_widget">
 									<div className="apsc-icons-wrapper clearfix apsc-theme-4">
 										<div className="apsc-each-profile">
@@ -352,22 +346,6 @@ export class Blogs extends Component {
 												</div>
 											</a>
 										</div>
-									</div>
-								</div>
-
-								<div className="bg-maincolor widget-search">
-									<div className="widget widget_search">
-										<h5>Search On Website</h5>
-										<p>Find more exciting news and offers</p>
-										<form role="search" method="get" className="search-form" action="/">
-											<label htmlFor="search-form-widget">
-												<span className="screen-reader-text">Search for:</span>
-											</label>
-											<input type="search" id="search-form-widget" className="search-field form-control" placeholder="Type Keyword Here..." value="" name="search" />
-											<button type="submit" className="search-submit">
-												<span className="screen-reader-text">Type Keyword Here...</span>
-											</button>
-										</form>
 									</div>
 								</div>
 							</aside>

@@ -54,6 +54,19 @@ router.post('/', auth, (req, res) => {
         })
 })
 
+// Post         /api/blogs/update
+// Update       Likes and Dislikes
+router.post('/update', auth, (req, res) => {
+    const {likes, dislikes, username} = req.body
+    Blog.findOne({username})
+        .then( blog => {
+            blog.likes = likes
+            blog.dislikes = dislikes
+            blog.save().catch(err=>{res.send(err)})
+        })
+
+})
+
 // DELETE       /api/blogs/:id       This url comes from server.js Use Routes so it's of no need to insert this url again in the router.get('')
 // Delete       a blog
 // @access      Private

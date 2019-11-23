@@ -16,12 +16,12 @@ const BlogSchema = new Schema({
           required: true
       },
       likes: {
-          type: Number,
-          default: 0
+          type: Array,
+          default: []
       },
       dislikes: {
-          type: Number,
-          default: 0
+          type: Array,
+          default: []
       },
       image: {
           type: String,

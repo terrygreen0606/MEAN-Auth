@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import RecentBlogs from '../Blogs/recentBlogs'
 
 export class Footer extends Component {
     render() {
@@ -51,57 +52,7 @@ export class Footer extends Component {
 						</div>
 
 						<div className="col-md-6 col-lg-4 animate" data-animation="fadeInUp">
-							<div className="widget widget_recent_posts">
-								<h3 className="widget-title">Recent Posts</h3>
-								<ul className="list-unstyled">
-									<li className="media">
-										<a className="media-image" href="blog-single-right.html">
-											<img src="/images/events/01.jpg" alt="" />
-										</a>
-										<div className="media-body">
-											<p>
-												<a href="blog-single-right.html">Pro Cooking Tips Braising Meats For Tenderness</a>
-											</p>
-											<h6 className="item-meta">
-												<i className="fa fa-calendar color-main"></i>
-												20 jan, 18
-											</h6>
-										</div>
-									</li>
-
-									<li className="media">
-										<a className="media-image" href="blog-single-right.html">
-											<img src="/images/events/02.jpg" alt="" />
-										</a>
-										<div className="media-body">
-											<p>
-												<a href="blog-single-right.html">Barbecue Party Tips For A Truly Amazing Event</a>
-											</p>
-											<h6 className="item-meta">
-												<i className="fa fa-calendar color-main"></i>
-												23 jan, 18
-											</h6>
-
-										</div>
-									</li>
-
-									<li className="media">
-										<a className="media-image" href="blog-single-right.html">
-											<img src="/images/events/03.jpg" alt="" />
-										</a>
-										<div className="media-body">
-											<p>
-												<a href="blog-single-right.html">The Best Way To Cook Your Freshly Caught Fish</a>
-											</p>
-											<h6 className="item-meta">
-												<i className="fa fa-calendar color-main"></i>
-												25 jan, 18
-											</h6>
-
-										</div>
-									</li>
-								</ul>
-							</div>
+							<RecentBlogs />
 						</div>
 
 						<div className="col-md-6 col-lg-4 animate text-center text-lg-left" data-animation="fadeInUp">
