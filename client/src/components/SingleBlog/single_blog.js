@@ -67,9 +67,9 @@ export class SingleBlog extends Component {
     onSubmit = (e) => {
 		e.preventDefault()
 
-		if (this.props.error.msg === 'Invalid token.') {
-			return <Redirect to='/login' />
-		}
+		// if (this.props.error.msg === 'Invalid token.') {
+		// 	return <Redirect to='/login' />
+		// }
 
 		this.setState({submitted: true})
 
@@ -86,7 +86,7 @@ export class SingleBlog extends Component {
 		}
 	}
 
-	likeOrDislike = ( flag, likeArr, dislikeArr, blogPoster ) => {
+	likeOrDislike( flag, likeArr, dislikeArr, blogPoster ) {
 		if (this.props.isAuthenticated) {
 			const username = this.props.user.username
 			if (flag) {
@@ -107,6 +107,7 @@ export class SingleBlog extends Component {
 				for (let i=0; i<dislikeArr.length; i++) {
 					if (dislikeArr[i] === username) {
 						dislikeArr.splice(i, 1)
+						likeArr.push(username)
 						break
 					}
 				}
@@ -114,15 +115,10 @@ export class SingleBlog extends Component {
 				for (let i=0; i<likeArr.length; i++) {
 					if (likeArr[i] === username) {
 						likeArr.splice(i, 1)
+						dislikeArr.push(username)
 						break
 					}
 				}
-			}
-
-			if (flag) {
-				likeArr.push(username)
-			} else {
-				dislikeArr.push(username)
 			}
 
 			const toSend = { likes: likeArr, dislikes: dislikeArr, username: blogPoster }
@@ -134,7 +130,35 @@ export class SingleBlog extends Component {
 		} else {
 			console.log('login to like or dislike')
 		}
+
+		// if (this.props.isAuthenticated) {
+		// 	const username = this.props.user.username
+		// 	if(flag){
+		// 		if(likeArr.includes(username)){
+		// 			console.log('you already LIKED this post.');
+		// 		}
+	
+		// 		if(dislikeArr.includes(username)){
+		// 			dislikeArr.splice(dislikeArr.findIndex(x => x === username), 1);
+		// 		}
+		// 		likeArr.push(username);
+		// 	}
+		// 	else{
+		// 		if(dislikeArr.includes(username)){
+		// 			console.log('you already DISLIKED this post.')
+		// 		}
+	
+		// 		if(likeArr.includes(username)){
+		// 			likeArr.splice(likeArr.findIndex(x => x === username), 1);
+		// 		}
+		// 		dislikeArr.push(username);
+		// 	}        
+		// } else {
+		// 	console.log('login to like or dislike')
+		// }
 	}
+
+	
 
 	showBlog = () => {
 		
@@ -146,12 +170,12 @@ export class SingleBlog extends Component {
 						<div className="item-media post-thumbnail">
 							<img src={blog.image} alt="" />
 							<div className="text-md-left entry-meta item-meta bg-dark-transpatent meta-event">
-								<Link to='/'>
+								<Link to='#'>
 									<i className="fa fa-calendar color-main2"></i>
 									<span>{dateFormat(blog.register_date, 'mmmm dS, yyyy')}</span>
 								</Link>
-								<Link to='/'>
-									<i className="fa fa-map-marker color-main2"></i>
+								<Link to='#'>
+									<i className="fa fa-user-o color-main2"></i>
 									<span>{blog.username}</span>
 								</Link>
 								<Link to='#' onClick={this.likeOrDislike.bind( this, true, blog.likes, blog.dislikes, blog.username)}>
@@ -159,7 +183,6 @@ export class SingleBlog extends Component {
 									<span>{blog.likes.length}</span>
 								</Link>
 								<Link to='#' onClick={this.likeOrDislike.bind( this, false, blog.likes, blog.dislikes, blog.username)}>
-								{/* onClick={this.likeOrDislike( false, blog.likes, blog.dislikes)} */}
 									<i className="fa fa-thumbs-o-down color-main2"></i>
 									<span>{blog.dislikes.length}</span>
 								</Link>

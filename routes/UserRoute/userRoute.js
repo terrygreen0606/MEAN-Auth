@@ -71,7 +71,7 @@ router.post('/signup', (req, res) => {
         })
 })
 
-// GET      /users/login                              This url comes from server.js Use Routes so it's of no need to insert this url again in the router.get('')
+// POST      /users/login                              This url comes from server.js Use Routes so it's of no need to insert this url again in the router.get('')
 // Get      Auth user when login
 // @access  Public
 router.post('/login', (req, res) => {

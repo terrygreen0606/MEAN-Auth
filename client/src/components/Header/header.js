@@ -31,7 +31,7 @@ export class Header extends Component {
 		const { isAuthenticated, userLoading } = this.props
 
         return (
-            <header className="page_header ls justify-nav-center">
+            <header className="page_header ls justify-nav-center animate" data-animation="slideInLeft" data-delay="150">
 				<div className="container-fluid">
 					<div className="row align-items-center">
 						<div className="col-xl-2 col-lg-3 col-11">

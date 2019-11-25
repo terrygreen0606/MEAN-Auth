@@ -10,6 +10,7 @@ import { clearErrors } from '../../actions/error/errorAction'
 import Title from '../Title/title'
 import Pagination from '../pagination'
 import RecentBlogs from './recentBlogs'
+import PopularBlogs from './popularBlogs'
 
 export class Blogs extends Component {
 
@@ -22,16 +23,17 @@ export class Blogs extends Component {
 		blogsPerPage: 5,
 		filename: 'Choose Image',
 		uploadedFile: null,
-		uploaded: {}
+		uploaded: {},
+		keyword: ''
 	}
 
 	onSubmit = (e) => {
 
 		e.preventDefault()
 		
-		if (this.props.error.msg === 'Invalid token.') {
-			return <Redirect to='/login' />
-		}
+		// if (this.props.error.msg === 'Invalid token.') {
+		// 	return <Redirect to='/login' />
+		// }
 
 		this.setState({submitted: true})
 
@@ -52,7 +54,7 @@ export class Blogs extends Component {
 		} else {
 			this.setState({msg: 'Please log in to post your blog.'})
 		}
-    }
+	}
 
     onChange = (e) => {
         this.setState({
@@ -92,6 +94,7 @@ export class Blogs extends Component {
 				this.setState({
 					title: '',
 					content: '',
+					filename: 'Choose Image',
 					msg: 'Your blog is successfully posted.'
 				})
 			}
@@ -131,7 +134,7 @@ export class Blogs extends Component {
 								<div className="item-meta color-darkgrey">
 									<i className="fa fa-calendar color-main"></i>
 										<span>{dateFormat(blog.register_date, 'mmmm dS, yyyy')}</span>
-									<i className="fa fa-map-marker color-main"></i>
+									<i className="fa fa-user-o color-main"></i>
 									<span>{blog.username}</span>
 								</div>
 								<p>
@@ -164,7 +167,6 @@ export class Blogs extends Component {
 	}
 
     render() {
-
         return (
 			<Fragment>
 				<Title pageTitle='One of the best Blog websites' />
@@ -212,105 +214,15 @@ export class Blogs extends Component {
 											<label htmlFor="search-form-widget">
 												<span className="screen-reader-text">Search for:</span>
 											</label>
-											<input type="search" id="search-form-widget" className="search-field form-control" placeholder="Type Keyword Here..." value="" name="search" />
+											<input type="search" id="search-form-widget" className="search-field form-control" placeholder="Type Keyword Here..." value={this.state.keyword} onChange={this.onChange} name="keyword" />
 											<button type="submit" className="search-submit">
 												<span className="screen-reader-text">Type Keyword Here...</span>
 											</button>
 										</form>
 									</div>
 								</div>
-								<div className="widget widget_popular_entries">
-
-									<h3 className="widget-title">Popular Posts</h3>
-									<ul className="list-unstyled">
-										<li className="media">
-											<a className="media-image" href="blog-single-right.html">
-												<img src="/images/recent_post1.jpg" alt="" />
-											</a>
-											<div className="media-body">
-												<h4>
-													<a href="blog-single-right.html">Eod tempor invidunt labore dolore magna</a>
-												</h4>
-												<div className="star-rating" title="Rated 5 out of 5">
-													<span style={{ width: '100%' }}>
-														<strong className="rating">5</strong> out of 5
-													</span>
-												</div>
-											</div>
-										</li>
-
-										<li className="media">
-											<a className="media-image" href="blog-single-right.html">
-												<img src="/images/recent_post2.jpg" alt="" />
-											</a>
-											<div className="media-body">
-												<h4>
-													<a href="blog-single-right.html">Aliquyam erat, sed voluptua vero eos </a>
-												</h4>
-												<div className="star-rating" title="Rated 4.0 out of 5">
-													<span style={{ width: '60%' }}>
-														<strong className="rating">4</strong> out of 5
-													</span>
-												</div>
-
-											</div>
-										</li>
-
-										<li className="media">
-											<a className="media-image" href="blog-single-right.html">
-												<img src="/images/recent_post1.jpg" alt="" />
-											</a>
-											<div className="media-body">
-												<h4>
-													<a href="blog-single-right.html">Et justo duo dolores et ea rebum</a>
-												</h4>
-												<div className="star-rating" title="Rated 4.50 out of 5">
-													<span style={{ width: '80%' }}>
-														<strong className="rating">4.50</strong> out of 5
-													</span>
-												</div>
-
-											</div>
-										</li>
-
-										<li className="media">
-											<a className="media-image" href="blog-single-right.html">
-												<img src="/images/recent_post2.jpg" alt="" />
-											</a>
-											<div className="media-body">
-												<h4>
-													<a href="blog-single-right.html">Stetclita kasd gubergren no sea takimata</a>
-												</h4>
-												<div className="star-rating" title="Rated 3.00 out of 5">
-													<span style={{ width: '40%' }}>
-														<strong className="rating">3</strong> out of 5
-													</span>
-												</div>
-											</div>
-										</li>
-
-										<li className="media">
-											<a className="media-image" href="blog-single-right.html">
-												<img src="/images/recent_post1.jpg" alt="" />
-											</a>
-											<div className="media-body">
-												<h4>
-													<a href="blog-single-right.html">Lorem ipsum dolor sitmet amet consetetur </a>
-												</h4>
-												<div className="star-rating" title="Rated 4.50 out of 5">
-													<span style={{ width: '90%' }}>
-														<strong className="rating">4.50</strong> out of 5
-													</span>
-												</div>
-
-											</div>
-										</li>
-
-									</ul>
-								</div>
-
+								<PopularBlogs propBlogs={this.props.blogs}/>
 								<RecentBlogs />
-
 								<div className="widget widget_apsc_widget">
 									<div className="apsc-icons-wrapper clearfix apsc-theme-4">
 										<div className="apsc-each-profile">

@@ -33,19 +33,21 @@ router.post('/', auth, (req, res) => {
     }
 
     const file = req.files.file
-    // Move the uploaded file to
-    file.mv(`${__dirname}../../../client/public/uploads/${file.name}`, err => {
-        if (err) {
-            console.log(err)
-            return res.status(500).send(err)
-        }
-    })
-    const filePath = `/uploads/${file.name}`
+    
     Blog.findOne({ username })
         .then( blog => {
 
             if (blog) return res.status(400).json({ msg: 'You have already posted your blog.'})
 
+            // Move the uploaded file to
+            file.mv(`${__dirname}../../../client/public/uploads/${file.name}`, err => {
+                if (err) {
+                    console.log(err)
+                    return res.status(500).send(err)
+                }
+            })
+            const filePath = `/uploads/${file.name}`
+            
             const newBlog = new Blog({
                 title, content, username, image: filePath
             })
@@ -64,7 +66,6 @@ router.post('/update', auth, (req, res) => {
             blog.dislikes = dislikes
             blog.save().catch(err=>{res.send(err)})
         })
-
 })
 
 // DELETE       /api/blogs/:id       This url comes from server.js Use Routes so it's of no need to insert this url again in the router.get('')

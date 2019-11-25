@@ -1,7 +1,7 @@
-import store from '../store'
-
 export const test = () => {
-   console.log(store.getState().auth.token)
+   var obj = [{title: 'title', content: 'content'}]
+   console.log(obj.title)
+   console.log(...obj)
 }
 
 export default test

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Link} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import dateFormat from 'dateformat'
@@ -15,12 +16,12 @@ export class RecentBlogs extends Component {
         const recentBlogs = this.props.blogs.slice(0, 2)
         const showRecent = recentBlogs.map( blog => (
 			<li key={blog._id} className="media">
-				<a className="media-image" href="blog-single-right.html">
+				<Link to={'/blogs/' + blog._id} className="media-image">
 					<img src={blog.image} alt="" />
-				</a>
+				</Link>
 				<div className="media-body">
 					<p>
-						<a href="blog-single-right.html">{blog.title}</a>
+                        <Link to={"/blogs/" + blog._id}>{blog.title}</Link>
 					</p>
 					<h6 className="item-meta">
 						<i className="fa fa-calendar color-main"></i>
