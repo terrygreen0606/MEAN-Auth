@@ -36,8 +36,6 @@ mongoose
 	.catch(err => console.log(err));
 
 // Import Routes and Use them
-app.use("/api/blogs", require("./routes/api/blogRoute"));
-app.use("/api/comments", require("./routes/api/commentRoute"));
 app.use("/users", require("./routes/UserRoute/userRoute"));
 
 // Serve Static assets if in production for DEPLOYMENT
