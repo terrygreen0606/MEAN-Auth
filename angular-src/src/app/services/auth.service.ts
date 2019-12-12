@@ -11,7 +11,7 @@ const httpOptions = {
     headers: new HttpHeaders(headerJson)
 };
 
-const url = "http://localhost:5000";
+const localurl = "http://localhost:5000/";
 
 @Injectable({
     providedIn: "root"
@@ -34,11 +34,11 @@ export class AuthService {
     }
 
     registerUser(user): Observable<User> {
-        return this.http.post<User>(`${url}/users/register`, user, httpOptions);
+        return this.http.post<User>(`users/register`, user, httpOptions);
     }
 
     loginUser(user): Observable<User> {
-        return this.http.post<User>(`${url}/users/login`, user, httpOptions);
+        return this.http.post<User>(`users/login`, user, httpOptions);
     }
 
     // Check the jwt to get if user is loggedin
@@ -65,6 +65,6 @@ export class AuthService {
             ...headerJson,
             Authorization: this.authToken
         });
-        return this.http.get<User>(`${url}/users/profile`, { headers });
+        return this.http.get<User>(`users/profile`, { headers });
     }
 }

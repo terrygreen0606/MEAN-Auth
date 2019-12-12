@@ -38,16 +38,10 @@ mongoose
 // Import Routes and Use them
 app.use("/users", require("./routes/UserRoute/userRoute"));
 
-// Serve Static assets if in production for DEPLOYMENT
-if (process.env.NODE_ENV === "production") {
-	// Set Static folder
-	app.use(express.static("public/build"));
+app.get("*", (req, res) => {
+	res.sendFile(path.join(__dirname, "public/index.html"));
+});
 
-	app.get("*", (req, res) => {
-		res.sendFile(path.resolve(__dirname, "public", "build", "index.html"));
-	});
-}
-
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8080;
 
 app.listen(port, () => console.log("Server Started on " + port));
