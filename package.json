@@ -9,8 +9,7 @@
 		"server": "nodemon server.js",
 		"client": "cd angular-src && ng serve",
 		"dev": "concurrently \"npm run server\" \"npm run client\"",
-		"client-install": "cd client && npm install",
-		"heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+		"client-install": "cd client && npm install"
 	},
 	"keywords": [],
 	"author": "",
