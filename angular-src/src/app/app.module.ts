@@ -5,6 +5,8 @@ import { HttpClientModule } from "@angular/common/http";
 import { FlashMessagesModule } from "angular2-flash-messages";
 
 import { AppRoutingModule } from "./app-routing.module";
+import { AuthGuard } from "./authGuards/auth.guard";
+
 import { AppComponent } from "./app.component";
 import { NavbarComponent } from "./components/navbar/navbar.component";
 import { LoginComponent } from "./components/login/login.component";
@@ -30,7 +32,7 @@ import { ProfileComponent } from "./components/profile/profile.component";
         HttpClientModule,
         FlashMessagesModule.forRoot()
     ],
-    providers: [],
+    providers: [AuthGuard],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
+import { JwtHelperService } from "@auth0/angular-jwt";
 import { User } from "../models/User";
 
 let headerJson = {
@@ -38,6 +39,13 @@ export class AuthService {
 
     loginUser(user): Observable<User> {
         return this.http.post<User>(`${url}/users/login`, user, httpOptions);
+    }
+
+    // Check the jwt to get if user is loggedin
+    loggedIn() {
+        const helper = new JwtHelperService();
+        this.loadToken();
+        return helper.isTokenExpired(this.authToken);
     }
 
     logout() {
