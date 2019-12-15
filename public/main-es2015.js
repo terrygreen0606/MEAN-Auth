@@ -799,7 +799,7 @@ let LoginComponent = class LoginComponent {
             if (res.success) {
                 // Save to localstorage
                 this.authService.storeUserData(res.token, res.user);
-                this.flashMessages.show("Successfully registered!", {
+                this.flashMessages.show("Successfully logged in!", {
                     cssClass: "alert-success",
                     timeout: 3000
                 });

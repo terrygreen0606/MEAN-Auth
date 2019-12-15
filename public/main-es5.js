@@ -778,7 +778,7 @@
                         if (res.success) {
                             // Save to localstorage
                             _this.authService.storeUserData(res.token, res.user);
-                            _this.flashMessages.show("Successfully registered!", {
+                            _this.flashMessages.show("Successfully logged in!", {
                                 cssClass: "alert-success",
                                 timeout: 3000
                             });
