@@ -153,13 +153,14 @@ router.get(
 router.post("/forgotpassword", (req, res, next) => {
 	const { email } = req.body;
 
-	if (email === "") return res.json("Email required");
+	if (email === "")
+		return res.json({ success: false, msg: "Email required" });
 
 	User.findOne({ email }).then(user => {
 		if (!user) {
 			return res.json({
-				status: 400,
-				message: "That email does not exist."
+				success: false,
+				msg: "That email does not exist."
 			});
 		} else {
 			const token = crypto.randomBytes(20).toString("hex");
@@ -176,18 +177,20 @@ router.post("/forgotpassword", (req, res, next) => {
 				from: "terrygreen1992@outlook.com",
 				to: `${user.email}`,
 				subject: "Reset Password",
-				text: `To reset password, click the link: http://localhost:3000/reset/${token}`,
+				text: `To reset password, click the link: http://localhost:4200/reset/${token}`,
 				onError: err => {
 					console.log("There was an error while sending email.", err);
-					res.status(400).json(
-						"There caused an error while sending email. Perhaps your email address went wrong."
-					);
+					res.json({
+						success: false,
+						msg:
+							"There caused an error while sending email. Perhaps your email address went wrong."
+					});
 				},
 				onSuccess: response => {
 					console.log("This is the response.", response);
 					res.json({
-						status: 200,
-						message:
+						success: true,
+						msg:
 							"Recovery Email sent. This email is valid for only an hour. If you can not see the email in your inbox, take a look at Junk email box and click the link there to reset your password."
 					});
 				}
@@ -199,22 +202,24 @@ router.post("/forgotpassword", (req, res, next) => {
 // Get    '/users/reset'
 // Reset Password after comparing tokens
 router.get("/reset", (req, res, next) => {
-	// console.log(req.query.token)
+	// console.log(req.query.id);
 	User.findOne({
-		resetPasswordToken: req.query.token,
+		resetPasswordToken: req.query.id,
 		resetPasswordExpires: {
 			$gt: Date.now()
 		}
 	}).then(user => {
 		if (!user) {
 			console.log("Password Reset Link is invalid or has expired.");
-			res.status(400).json(
-				"Password Reset Link is invalid or has expired."
-			);
+			res.json({
+				success: false,
+				msg: "Password Reset Link is invalid or has expired."
+			});
 		} else {
-			res.status(200).send({
+			res.send({
+				success: true,
 				email: user.email,
-				message: "The password reset link is OK."
+				msg: "The password reset link is OK."
 			});
 		}
 	});
@@ -234,13 +239,19 @@ router.put("/updatepassword", (req, res, next) => {
 					user.resetPasswordExpires = null;
 					user.save().then(() => {
 						console.log("Password Updated");
-						res.status(200).json("Password is updated.");
+						res.json({
+							success: true,
+							msg: "Password is updated."
+						});
 					});
 				});
 			});
 		} else {
 			console.log("That email does not exist in db.");
-			res.status(404).json("No user exists in our database to update.");
+			res.json({
+				success: false,
+				msg: "No user exists in our database to update."
+			});
 		}
 	});
 });

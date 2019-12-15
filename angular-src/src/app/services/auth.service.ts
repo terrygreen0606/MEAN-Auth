@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable } from "rxjs";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { Observable, Observer } from "rxjs";
 import { JwtHelperService } from "@auth0/angular-jwt";
 import { User } from "../models/User";
 
@@ -11,7 +11,7 @@ const httpOptions = {
     headers: new HttpHeaders(headerJson)
 };
 
-const localurl = "http://localhost:5000/";
+const localurl = "http://localhost:8080/";
 
 @Injectable({
     providedIn: "root"
@@ -19,6 +19,7 @@ const localurl = "http://localhost:5000/";
 export class AuthService {
     authToken: any;
     user: any;
+    password: string;
 
     constructor(private http: HttpClient) {}
 
@@ -34,11 +35,19 @@ export class AuthService {
     }
 
     registerUser(user): Observable<User> {
-        return this.http.post<User>(`users/register`, user, httpOptions);
+        return this.http.post<User>(
+            `${localurl}users/register`,
+            user,
+            httpOptions
+        );
     }
 
     loginUser(user): Observable<User> {
-        return this.http.post<User>(`users/login`, user, httpOptions);
+        return this.http.post<User>(
+            `${localurl}users/login`,
+            user,
+            httpOptions
+        );
     }
 
     // Check the jwt to get if user is loggedin
@@ -54,6 +63,27 @@ export class AuthService {
         localStorage.clear();
     }
 
+    forgotPassword(email): Observable<User> {
+        return this.http.post<User>(
+            `${localurl}users/forgotpassword`,
+            { email },
+            httpOptions
+        );
+    }
+
+    resetPassword(token): Observable<User> {
+        const params = new HttpParams().set("id", token);
+        return this.http.get<User>(`${localurl}users/reset`, { params });
+    }
+
+    updatePassword(user): Observable<User> {
+        return this.http.put<User>(
+            `${localurl}users/updatepassword`,
+            user,
+            httpOptions
+        );
+    }
+
     loadToken() {
         const token = localStorage.getItem("id_token");
         this.authToken = token;
@@ -65,6 +95,6 @@ export class AuthService {
             ...headerJson,
             Authorization: this.authToken
         });
-        return this.http.get<User>(`users/profile`, { headers });
+        return this.http.get<User>(`${localurl}users/profile`, { headers });
     }
 }
