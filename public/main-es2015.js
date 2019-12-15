@@ -49,6 +49,19 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/forgot/forgot.component.html":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/forgot/forgot.component.html ***!
+  \***********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<h2 class=\"page-header\">Forgot your password?</h2>\n<form class=\"form\" ngNativeValidate (ngSubmit)=\"forgotSubmit()\">\n    <div class=\"form-group\">\n        <label>Email</label>\n        <input type=\"email\" [(ngModel)]=\"email\" name=\"email\" class=\"form-control\" placeholder=\"Email\" required />\n    </div>\n    <input type=\"submit\" value=\"Send me link\" class=\"btn btn-primary btn-block\" />\n</form>\n");
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/home/home.component.html":
 /*!*******************************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/home/home.component.html ***!
@@ -71,7 +84,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<h2 class=\"page-header\">Log In</h2>\n<form class=\"form\" ngNativeValidate (ngSubmit)=\"onLoginSubmit()\">\n    <div class=\"form-group\">\n        <label>Email</label>\n        <input type=\"email\" [(ngModel)]=\"email\" name=\"email\" class=\"form-control\" placeholder=\"Email\" required />\n    </div>\n    <div class=\"form-group\">\n        <label>Password</label>\n        <input type=\"password\" [(ngModel)]=\"password\" name=\"password\" class=\"form-control\" placeholder=\"Password\"\n            required />\n    </div>\n    <input type=\"submit\" value=\"Login\" class=\"btn btn-primary btn-block\" />\n</form>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<h2 class=\"page-header\">Log In</h2>\n<form class=\"form\" ngNativeValidate (ngSubmit)=\"onLoginSubmit()\">\n    <div class=\"form-group\">\n        <label>Email</label>\n        <input type=\"email\" [(ngModel)]=\"email\" name=\"email\" class=\"form-control\" placeholder=\"Email\" required />\n    </div>\n    <div class=\"form-group\">\n        <label>Password</label>\n        <input type=\"password\" [(ngModel)]=\"password\" name=\"password\" class=\"form-control\" placeholder=\"Password\"\n            required />\n    </div>\n    <input type=\"submit\" value=\"Login\" class=\"btn btn-primary btn-block\" />\n</form>\n<h5 class=\"text-center mt-4\">Don't have an account?\n    <a routerLink=\"/register\">Sign Up</a>\n</h5>\n<h5 class=\"text-center mt-3\">If you forgot your password,click\n    <a routerLink=\"/forgot\">Here</a>\n</h5>\n");
 
 /***/ }),
 
@@ -110,7 +123,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<h2 class=\"page-header\">Register</h2>\n<form class=\"form\" ngNativeValidate (ngSubmit)=\"onRegisterSubmit()\">\n    <div class=\"form-group\">\n        <label>First Name</label>\n        <input type=\"text\" [(ngModel)]=\"first_name\" name=\"first_name\" class=\"form-control\" placeholder=\"First Name\"\n            required />\n    </div>\n    <div class=\"form-group\">\n        <label>Last Name</label>\n        <input type=\"text\" [(ngModel)]=\"last_name\" name=\"last_name\" class=\"form-control\" placeholder=\"Last Name\"\n            required />\n    </div>\n    <div class=\"form-group\">\n        <label>Username</label>\n        <input type=\"text\" [(ngModel)]=\"username\" name=\"username\" class=\"form-control\" placeholder=\"Username\"\n            required />\n    </div>\n    <div class=\"form-group\">\n        <label>Email</label>\n        <input type=\"email\" [(ngModel)]=\"email\" name=\"email\" class=\"form-control\" placeholder=\"Email\" required />\n    </div>\n    <div class=\"form-group\">\n        <label>Password</label>\n        <input type=\"password\" [(ngModel)]=\"password\" name=\"password\" class=\"form-control\" placeholder=\"Password\"\n            required />\n    </div>\n    <input type=\"submit\" value=\"Register\" class=\"btn btn-primary btn-block\" />\n</form>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<h2 class=\"page-header\">Register</h2>\n<form class=\"form\" ngNativeValidate (ngSubmit)=\"onRegisterSubmit()\">\n    <div class=\"form-group\">\n        <label>First Name</label>\n        <input type=\"text\" [(ngModel)]=\"first_name\" name=\"first_name\" class=\"form-control\" placeholder=\"First Name\"\n            required />\n    </div>\n    <div class=\"form-group\">\n        <label>Last Name</label>\n        <input type=\"text\" [(ngModel)]=\"last_name\" name=\"last_name\" class=\"form-control\" placeholder=\"Last Name\"\n            required />\n    </div>\n    <div class=\"form-group\">\n        <label>Username</label>\n        <input type=\"text\" [(ngModel)]=\"username\" name=\"username\" class=\"form-control\" placeholder=\"Username\"\n            required />\n    </div>\n    <div class=\"form-group\">\n        <label>Email</label>\n        <input type=\"email\" [(ngModel)]=\"email\" name=\"email\" class=\"form-control\" placeholder=\"Email\" required />\n    </div>\n    <div class=\"form-group\">\n        <label>Password</label>\n        <input type=\"password\" [(ngModel)]=\"password\" name=\"password\" class=\"form-control\" placeholder=\"Password\"\n            required />\n    </div>\n    <input type=\"submit\" value=\"Register\" class=\"btn btn-primary btn-block\" />\n</form>\n<h5 class=\"text-center mt-4\">Already a member? Then\n    <a routerLink=\"/login\">Log In</a>\n</h5>\n");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/resetpassword/resetpassword.component.html":
+/*!*************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/resetpassword/resetpassword.component.html ***!
+  \*************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<h2 class=\"page-header\">Reset your password</h2>\n<form class=\"form\" ngNativeValidate (ngSubmit)=\"resetPassword()\">\n    <div class=\"form-group\">\n        <label>Email</label>\n        <input type=\"email\" [(ngModel)]=\"email\" name=\"email\" class=\"form-control\" placeholder=\"Email\" required />\n    </div>\n    <div class=\"form-group\">\n        <label>Reset Password</label>\n        <input type=\"password\" [(ngModel)]=\"reset_pass\" name=\"reset_pass\" class=\"form-control\"\n            placeholder=\"New Password\" required />\n    </div>\n    <div class=\"form-group\">\n        <label>Confirm Password</label>\n        <input type=\"password\" [(ngModel)]=\"conf_pass\" name=\"conf_pass\" class=\"form-control\"\n            placeholder=\"Confirm Password\" required />\n    </div>\n    <input type=\"submit\" value=\"Reset your password\" class=\"btn btn-primary btn-block\" />\n</form>\n");
 
 /***/ }),
 
@@ -360,8 +386,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_home_home_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/home/home.component */ "./src/app/components/home/home.component.ts");
 /* harmony import */ var _components_register_register_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/register/register.component */ "./src/app/components/register/register.component.ts");
 /* harmony import */ var _components_login_login_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/login/login.component */ "./src/app/components/login/login.component.ts");
-/* harmony import */ var _components_dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/dashboard/dashboard.component */ "./src/app/components/dashboard/dashboard.component.ts");
-/* harmony import */ var _components_profile_profile_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/profile/profile.component */ "./src/app/components/profile/profile.component.ts");
+/* harmony import */ var _components_forgot_forgot_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/forgot/forgot.component */ "./src/app/components/forgot/forgot.component.ts");
+/* harmony import */ var _components_resetpassword_resetpassword_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/resetpassword/resetpassword.component */ "./src/app/components/resetpassword/resetpassword.component.ts");
+/* harmony import */ var _components_dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/dashboard/dashboard.component */ "./src/app/components/dashboard/dashboard.component.ts");
+/* harmony import */ var _components_profile_profile_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/profile/profile.component */ "./src/app/components/profile/profile.component.ts");
+
+
 
 
 
@@ -375,12 +405,14 @@ const routes = [
     { path: "", component: _components_home_home_component__WEBPACK_IMPORTED_MODULE_4__["HomeComponent"] },
     { path: "register", component: _components_register_register_component__WEBPACK_IMPORTED_MODULE_5__["RegisterComponent"] },
     { path: "login", component: _components_login_login_component__WEBPACK_IMPORTED_MODULE_6__["LoginComponent"] },
+    { path: "forgot", component: _components_forgot_forgot_component__WEBPACK_IMPORTED_MODULE_7__["ForgotComponent"] },
+    { path: "reset/:id", component: _components_resetpassword_resetpassword_component__WEBPACK_IMPORTED_MODULE_8__["ResetpasswordComponent"] },
     {
         path: "dashboard",
-        component: _components_dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_7__["DashboardComponent"],
+        component: _components_dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_9__["DashboardComponent"],
         canActivate: [_authGuards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]]
     },
-    { path: "profile", component: _components_profile_profile_component__WEBPACK_IMPORTED_MODULE_8__["ProfileComponent"], canActivate: [_authGuards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]] }
+    { path: "profile", component: _components_profile_profile_component__WEBPACK_IMPORTED_MODULE_10__["ProfileComponent"], canActivate: [_authGuards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]] }
 ];
 let AppRoutingModule = class AppRoutingModule {
 };
@@ -465,6 +497,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_home_home_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/home/home.component */ "./src/app/components/home/home.component.ts");
 /* harmony import */ var _components_dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/dashboard/dashboard.component */ "./src/app/components/dashboard/dashboard.component.ts");
 /* harmony import */ var _components_profile_profile_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/profile/profile.component */ "./src/app/components/profile/profile.component.ts");
+/* harmony import */ var _components_forgot_forgot_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/forgot/forgot.component */ "./src/app/components/forgot/forgot.component.ts");
+/* harmony import */ var _components_resetpassword_resetpassword_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/resetpassword/resetpassword.component */ "./src/app/components/resetpassword/resetpassword.component.ts");
+
+
 
 
 
@@ -491,7 +527,9 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _components_register_register_component__WEBPACK_IMPORTED_MODULE_11__["RegisterComponent"],
             _components_home_home_component__WEBPACK_IMPORTED_MODULE_12__["HomeComponent"],
             _components_dashboard_dashboard_component__WEBPACK_IMPORTED_MODULE_13__["DashboardComponent"],
-            _components_profile_profile_component__WEBPACK_IMPORTED_MODULE_14__["ProfileComponent"]
+            _components_profile_profile_component__WEBPACK_IMPORTED_MODULE_14__["ProfileComponent"],
+            _components_forgot_forgot_component__WEBPACK_IMPORTED_MODULE_15__["ForgotComponent"],
+            _components_resetpassword_resetpassword_component__WEBPACK_IMPORTED_MODULE_16__["ResetpasswordComponent"]
         ],
         imports: [
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
@@ -593,6 +631,75 @@ DashboardComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./dashboard.component.css */ "./src/app/components/dashboard/dashboard.component.css")).default]
     })
 ], DashboardComponent);
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/forgot/forgot.component.css":
+/*!********************************************************!*\
+  !*** ./src/app/components/forgot/forgot.component.css ***!
+  \********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZm9yZ290L2ZvcmdvdC5jb21wb25lbnQuY3NzIn0= */");
+
+/***/ }),
+
+/***/ "./src/app/components/forgot/forgot.component.ts":
+/*!*******************************************************!*\
+  !*** ./src/app/components/forgot/forgot.component.ts ***!
+  \*******************************************************/
+/*! exports provided: ForgotComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ForgotComponent", function() { return ForgotComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var angular2_flash_messages__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! angular2-flash-messages */ "./node_modules/angular2-flash-messages/module/index.js");
+/* harmony import */ var angular2_flash_messages__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(angular2_flash_messages__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../services/auth.service */ "./src/app/services/auth.service.ts");
+
+
+
+
+let ForgotComponent = class ForgotComponent {
+    constructor(authService, flashMessages) {
+        this.authService = authService;
+        this.flashMessages = flashMessages;
+    }
+    ngOnInit() { }
+    forgotSubmit() {
+        this.authService.forgotPassword(this.email).subscribe(res => {
+            if (res.success) {
+                this.msg = "alert-success";
+            }
+            else {
+                this.msg = "alert-danger";
+            }
+            this.flashMessages.show(res.msg, {
+                cssClass: this.msg,
+                timeout: 5000
+            });
+        });
+    }
+};
+ForgotComponent.ctorParameters = () => [
+    { type: _services_auth_service__WEBPACK_IMPORTED_MODULE_3__["AuthService"] },
+    { type: angular2_flash_messages__WEBPACK_IMPORTED_MODULE_2__["FlashMessagesService"] }
+];
+ForgotComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: "app-forgot",
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./forgot.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/forgot/forgot.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./forgot.component.css */ "./src/app/components/forgot/forgot.component.css")).default]
+    })
+], ForgotComponent);
 
 
 
@@ -939,6 +1046,102 @@ RegisterComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 
 /***/ }),
 
+/***/ "./src/app/components/resetpassword/resetpassword.component.css":
+/*!**********************************************************************!*\
+  !*** ./src/app/components/resetpassword/resetpassword.component.css ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvcmVzZXRwYXNzd29yZC9yZXNldHBhc3N3b3JkLmNvbXBvbmVudC5jc3MifQ== */");
+
+/***/ }),
+
+/***/ "./src/app/components/resetpassword/resetpassword.component.ts":
+/*!*********************************************************************!*\
+  !*** ./src/app/components/resetpassword/resetpassword.component.ts ***!
+  \*********************************************************************/
+/*! exports provided: ResetpasswordComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResetpasswordComponent", function() { return ResetpasswordComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var angular2_flash_messages__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! angular2-flash-messages */ "./node_modules/angular2-flash-messages/module/index.js");
+/* harmony import */ var angular2_flash_messages__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(angular2_flash_messages__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../services/auth.service */ "./src/app/services/auth.service.ts");
+
+
+
+
+
+let ResetpasswordComponent = class ResetpasswordComponent {
+    constructor(flashMessages, router, route, authService) {
+        this.flashMessages = flashMessages;
+        this.router = router;
+        this.route = route;
+        this.authService = authService;
+    }
+    ngOnInit() {
+        this.authService
+            .resetPassword(this.route.snapshot.params.id)
+            .subscribe(res => {
+            if (!res.success) {
+                setTimeout(() => {
+                    this.router.navigate(["/login"]);
+                }, 5000);
+                return this.flashMessages.show(res.msg + "You'll be redirected to Login Page.", {
+                    cssClass: "alert-danger",
+                    timeout: 5000
+                });
+            }
+        });
+    }
+    resetPassword() {
+        if (this.reset_pass !== this.conf_pass) {
+            return this.flashMessages.show("Password doesn't match.", {
+                cssClass: "alert-danger",
+                timeout: 3000
+            });
+        }
+        const user = {
+            email: this.email,
+            password: this.reset_pass
+        };
+        this.authService.updatePassword(user).subscribe(res => {
+            if (!res.success) {
+                return this.flashMessages.show(res.msg, {
+                    cssClass: "alert-danger",
+                    timeout: 3000
+                });
+            }
+            this.router.navigate(["/login"]);
+        });
+    }
+};
+ResetpasswordComponent.ctorParameters = () => [
+    { type: angular2_flash_messages__WEBPACK_IMPORTED_MODULE_3__["FlashMessagesService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },
+    { type: _services_auth_service__WEBPACK_IMPORTED_MODULE_4__["AuthService"] }
+];
+ResetpasswordComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: "app-resetpassword",
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./resetpassword.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/resetpassword/resetpassword.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./resetpassword.component.css */ "./src/app/components/resetpassword/resetpassword.component.css")).default]
+    })
+], ResetpasswordComponent);
+
+
+
+/***/ }),
+
 /***/ "./src/app/services/auth.service.ts":
 /*!******************************************!*\
   !*** ./src/app/services/auth.service.ts ***!
@@ -963,7 +1166,7 @@ let headerJson = {
 const httpOptions = {
     headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"](headerJson)
 };
-const localurl = "http://localhost:5000/";
+// const localurl = "http://localhost:8080/";
 let AuthService = class AuthService {
     constructor(http) {
         this.http = http;
@@ -992,6 +1195,16 @@ let AuthService = class AuthService {
         this.authToken = null;
         this.user = null;
         localStorage.clear();
+    }
+    forgotPassword(email) {
+        return this.http.post(`users/forgotpassword`, { email }, httpOptions);
+    }
+    resetPassword(token) {
+        const params = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpParams"]().set("id", token);
+        return this.http.get(`users/reset`, { params });
+    }
+    updatePassword(user) {
+        return this.http.put(`users/updatepassword`, user, httpOptions);
     }
     loadToken() {
         const token = localStorage.getItem("id_token");
