@@ -11,7 +11,7 @@ const httpOptions = {
     headers: new HttpHeaders(headerJson)
 };
 
-const localurl = "http://localhost:8080/";
+// const localurl = "http://localhost:8080/";
 
 @Injectable({
     providedIn: "root"
@@ -35,19 +35,11 @@ export class AuthService {
     }
 
     registerUser(user): Observable<User> {
-        return this.http.post<User>(
-            `${localurl}users/register`,
-            user,
-            httpOptions
-        );
+        return this.http.post<User>(`users/register`, user, httpOptions);
     }
 
     loginUser(user): Observable<User> {
-        return this.http.post<User>(
-            `${localurl}users/login`,
-            user,
-            httpOptions
-        );
+        return this.http.post<User>(`users/login`, user, httpOptions);
     }
 
     // Check the jwt to get if user is loggedin
@@ -65,7 +57,7 @@ export class AuthService {
 
     forgotPassword(email): Observable<User> {
         return this.http.post<User>(
-            `${localurl}users/forgotpassword`,
+            `users/forgotpassword`,
             { email },
             httpOptions
         );
@@ -73,15 +65,11 @@ export class AuthService {
 
     resetPassword(token): Observable<User> {
         const params = new HttpParams().set("id", token);
-        return this.http.get<User>(`${localurl}users/reset`, { params });
+        return this.http.get<User>(`users/reset`, { params });
     }
 
     updatePassword(user): Observable<User> {
-        return this.http.put<User>(
-            `${localurl}users/updatepassword`,
-            user,
-            httpOptions
-        );
+        return this.http.put<User>(`users/updatepassword`, user, httpOptions);
     }
 
     loadToken() {
@@ -95,6 +83,6 @@ export class AuthService {
             ...headerJson,
             Authorization: this.authToken
         });
-        return this.http.get<User>(`${localurl}users/profile`, { headers });
+        return this.http.get<User>(`users/profile`, { headers });
     }
 }
