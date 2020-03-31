@@ -2,6 +2,8 @@
 
 MEAN-boilerplate with JWT and passport for 0Auth
 
+### Available Scripts
+
 ### After cloning
 
 npm run client-install
