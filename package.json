@@ -20,7 +20,7 @@
 		"config": "^3.3.8",
 		"cors": "^2.8.5",
 		"crypto": "^1.0.1",
-		"express": "^4.17.3",
+		"express": "^4.19.2",
 		"jsonwebtoken": "^9.0.0",
 		"mongoose": "^5.13.15",
 		"nodejs-nodemailer-outlook": "^1.2.1",
